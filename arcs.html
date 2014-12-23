@@ -46,9 +46,14 @@ var ease = d3.ease("linear"),
     duration = 7500;
 
 d3.timer(function(elapsed) {
-    var t = ease(1 - Math.abs((elapsed % duration) / duration - .5) * 2);
+    var t0 = ease((elapsed % duration) / duration),
+        t1 = ease(1 - Math.abs((elapsed % duration) / duration - .5) * 2);
     path
-        .data(pie.padAngle(t * τ / data.length)(data))
+        .data(pie
+            .startAngle(t0 * τ / data.length)
+            .endAngle(τ + t0 * τ / data.length)
+            .padAngle(t1 * τ / data.length)
+            (data))
         .attr("d", arc);
 });
 
