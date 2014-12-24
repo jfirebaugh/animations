@@ -28,20 +28,24 @@ var stars = svg.selectAll("text")
     .text(function() { return ("✦★✶✸✹").charAt(Math.random() * 5); })
   .transition()
     .delay(function(d) { return d * period / n; })
+    .duration(period / 2)
     .each(twinkle);
 
 function twinkle() {
-    var x = Math.random() * width,
-        y = Math.random() * height,
-        translate = "translate(" + [x, y] + ")";
+    var star = d3.select(this);
+    (function repeat() {
+        var x = Math.random() * width,
+            y = Math.random() * height,
+            translate = "translate(" + [x, y] + ")";
 
-    d3.select(this)
-        .attr("transform", translate + "scale(0)")
-      .transition()
-        .duration(period / 2)
-        .attr("transform", translate + "scale(1)")
-      .transition()
-        .attr("transform", translate + "scale(0)")
-        .each("end", twinkle);
+        star = star.transition()
+            .each(function() {
+                d3.select(this).attr("transform", translate + "scale(0)");
+            })
+            .attr("transform", translate + "scale(1)")
+          .transition()
+            .attr("transform", translate + "scale(0)")
+            .each("end", repeat);
+    })();
 }
 </script>
