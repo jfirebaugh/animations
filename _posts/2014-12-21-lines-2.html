@@ -1,18 +1,10 @@
-<!DOCTYPE html>
-<meta charset="utf-8">
+---
+layout: default
+---
 <style>
-body {
-    background: #222;
-}
-
 svg {
-    display: block;
     background: #111;
-    margin-top: 100px;
-    margin-left: auto;
-    margin-right: auto;
 }
-
 path {
     stroke: #D1D1D1;
     stroke-width: 2;
@@ -20,8 +12,6 @@ path {
     line-cap: round;
 }
 </style>
-<body>
-<script src="http://d3js.org/d3.v3.min.js"></script>
 <script>
 var width = 500,
     height = 500,
@@ -56,8 +46,8 @@ paths.append("path")
     .attr("d", "M0,0 L" + band + ",0");
 
 columns.transition()
-    .delay(function(d) { return p * 200; })
-    .each(function(d) {
+    .delay(function(d) { return d * 200; })
+    .each("start", function(d) {
         var paths = d3.select(this).selectAll("g");
 
         function down() {
