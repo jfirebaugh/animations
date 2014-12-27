@@ -5,25 +5,37 @@ layout: default
 svg {
     background: #1e1e1e;
 }
-.moon,
+.moon {
+    fill: #D1D1D1;
+}
 .snow {
-    fill: #DDD;
+    fill: url(#snow);
 }
 .tree {
     fill: rgba(16,16,16,1);
 }
 .shadow {
-    fill: rgba(16,16,16,.9);
+    fill: rgba(16,16,16,.8);
 }
+.stop1 { stop-color: #D1D1D1; }
+.stop2 { stop-color: #111; }
 </style>
+<svg>
+    <defs>
+        <linearGradient id="snow" x1="0" x2="0" y1="0" y2="1">
+          <stop class="stop1" offset="0%"/>
+          <stop class="stop2" offset="100%"/>
+        </linearGradient>
+    </defs>
+</svg>
 <script>
 var width = 500,
     height = 500,
     mx = 360,
     my = 100,
-    n = 10;
+    n = 8;
 
-var svg = d3.select("body").append("svg")
+var svg = d3.select("svg")
     .attr("width", width)
     .attr("height", height);
 
@@ -43,7 +55,7 @@ var snow = svg.append("rect")
 var data = d3.range(0, n)
     .map(function(d) {
         return {
-            x: 20 + d * 50 + Math.floor(Math.random() * 10),
+            x: d * (width / n) + Math.floor(Math.random() * 20),
             y: 0,
             w: 20 + Math.floor(Math.random() * 5),
             h: 0.65 * height + Math.floor(Math.random() * 10)
@@ -56,17 +68,45 @@ var g = svg.selectAll("g")
 
 g.append("rect")
     .attr("class", "tree")
-    .attr("x", function(d) { return d.x; })
-    .attr("y", function(d) { return d.y; })
-    .attr("width", function(d) { return d.w; })
-    .attr("height", function(d) { return d.h; });
 
 g.append("path")
     .attr("class", "shadow")
-    .attr("d", function(d) {
-        var x1 = d.x, x2 = d.x + d.w,
-            y1 = d.h, y2 = height;
-        return "M" + [x1, y1] + "L" + [x2, y1]
-             + "L" + [x2, y2] + "L" + [x1, y2] + "Z";
+
+g.call(frame);
+
+function frame(g) {
+    g.selectAll("rect")
+        .attr("class", "tree")
+        .attr("x", function(d) { return d.x; })
+        .attr("y", function(d) { return d.y; })
+        .attr("width", function(d) { return d.w; })
+        .attr("height", function(d) { return d.h; });
+
+    g.selectAll("path")
+        .attr("class", "shadow")
+        .attr("d", function(d) {
+            var x1 = d.x, x2 = d.x + d.w,
+                y1 = d.h, y2 = height,
+                s = (my - y1) / (mx - x1);
+            return "M" + [x1, y1] + "L" + [x2, y1]
+                 + "L" + [x2 - (y1 - y2) / s, y2]
+                 + "L" + [x1 - (y1 - y2) / s, y2] + "Z";
+        });
+};
+
+var t0 = 0;
+
+d3.timer(function(t1) {
+    dt = t1 - t0;
+    t0 = t1;
+
+    data.forEach(function(d) {
+        d.x += 0.2 * dt;
+        if (d.x > width) {
+            d.x = -d.w - Math.floor(Math.random() * 10);
+        }
     });
+
+    g.call(frame);
+});
 </script>
