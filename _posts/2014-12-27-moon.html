@@ -1,0 +1,47 @@
+---
+layout: default
+---
+<style>
+svg {
+    background: #1e1e1e;
+}
+.moon,
+.snow {
+    fill: #DDD;
+}
+.tree {
+    fill: #111;
+;}
+</style>
+<script>
+var width = 500,
+    height = 500,
+    mx = 360,
+    my = 100;
+
+var svg = d3.select("body").append("svg")
+    .attr("width", width)
+    .attr("height", height);
+
+var moon = svg.append("circle")
+    .attr("class", "moon")
+    .attr("cx", mx)
+    .attr("cy", my)
+    .attr("r", 45);
+
+var snow = svg.append("rect")
+    .attr("class", "snow")
+    .attr("x", 0)
+    .attr("y", 0.6 * height)
+    .attr("width", width)
+    .attr("height", height);
+
+var trees = svg.selectAll(".tree")
+    .data(d3.range(0, 10))
+    .enter().append("rect")
+    .attr("class", "tree")
+    .attr("x", function(d) { return 20 + d * 50 + Math.random() * 10; })
+    .attr("y", function(d) { return 0; })
+    .attr("width", function(d) { return 20 + Math.random() * 5; })
+    .attr("height", function(d) { return 0.75 * height + Math.random() * 10; });
+</script>
