@@ -10,14 +10,18 @@ svg {
     fill: #DDD;
 }
 .tree {
-    fill: #111;
-;}
+    fill: rgba(16,16,16,1);
+}
+.shadow {
+    fill: rgba(16,16,16,.9);
+}
 </style>
 <script>
 var width = 500,
     height = 500,
     mx = 360,
-    my = 100;
+    my = 100,
+    n = 10;
 
 var svg = d3.select("body").append("svg")
     .attr("width", width)
@@ -32,16 +36,37 @@ var moon = svg.append("circle")
 var snow = svg.append("rect")
     .attr("class", "snow")
     .attr("x", 0)
-    .attr("y", 0.6 * height)
+    .attr("y", 0.5 * height)
     .attr("width", width)
     .attr("height", height);
 
-var trees = svg.selectAll(".tree")
-    .data(d3.range(0, 10))
-    .enter().append("rect")
+var data = d3.range(0, n)
+    .map(function(d) {
+        return {
+            x: 20 + d * 50 + Math.floor(Math.random() * 10),
+            y: 0,
+            w: 20 + Math.floor(Math.random() * 5),
+            h: 0.65 * height + Math.floor(Math.random() * 10)
+        };
+    });
+
+var g = svg.selectAll("g")
+    .data(data)
+    .enter().append("g");
+
+g.append("rect")
     .attr("class", "tree")
-    .attr("x", function(d) { return 20 + d * 50 + Math.random() * 10; })
-    .attr("y", function(d) { return 0; })
-    .attr("width", function(d) { return 20 + Math.random() * 5; })
-    .attr("height", function(d) { return 0.75 * height + Math.random() * 10; });
+    .attr("x", function(d) { return d.x; })
+    .attr("y", function(d) { return d.y; })
+    .attr("width", function(d) { return d.w; })
+    .attr("height", function(d) { return d.h; });
+
+g.append("path")
+    .attr("class", "shadow")
+    .attr("d", function(d) {
+        var x1 = d.x, x2 = d.x + d.w,
+            y1 = d.h, y2 = height;
+        return "M" + [x1, y1] + "L" + [x2, y1]
+             + "L" + [x2, y2] + "L" + [x1, y2] + "Z";
+    });
 </script>
