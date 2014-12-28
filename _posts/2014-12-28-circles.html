@@ -21,25 +21,28 @@ var g = svg.selectAll("g")
     .enter().append("g")
     .attr("transform", function(d) { return "translate(" + d + ")" });
 
-g.selectAll("circle")
+var circles = g.selectAll("circle")
     .data(d3.range(1,n))
     .enter().append("circle")
     .attr("r", function(d) { return d * (w / n); })
     .attr("fill", "#000")
-    .attr("fill-opacity", 0)
-  .transition()
-    .duration(2000)
-    .delay(function(d) { return d * 100; })
-    .each(loop);
+    .attr("fill-opacity", 0);
 
-function loop() {
-    var circle = d3.select(this);
-    (function repeat() {
-        circle = circle.transition()
-            .attr("fill-opacity", 0.03)
-          .transition()
-            .attr("fill-opacity", 0)
-            .each("end", repeat);
-    })();
-}
+(function loop() {
+    var duration = Math.random() * 2000 + 3000,
+        delay    = Math.random() * 100  + 200;
+    circles
+      .transition()
+        .ease("linear")
+        .duration(duration)
+        .delay(function(d) { return d * delay; })
+        .attr("fill-opacity", 0.05)
+      .transition()
+        .attr("fill-opacity", 0)
+        .each("end", function(d) {
+            if (d === 1) {
+                loop();
+            }
+        });
+})();
 </script>
