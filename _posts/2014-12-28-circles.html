@@ -1,0 +1,45 @@
+---
+layout: default
+---
+<script>
+var w = 500,
+    h = 500,
+    n = 30;
+
+var svg = d3.select("body").append("svg")
+    .attr("width", w)
+    .attr("height", h)
+    .attr("background", "black");
+
+var g = svg.selectAll("g")
+    .data([
+        [0, 0],
+        [w, 0],
+        [w, h],
+        [0, h]
+    ])
+    .enter().append("g")
+    .attr("transform", function(d) { return "translate(" + d + ")" });
+
+g.selectAll("circle")
+    .data(d3.range(1,n))
+    .enter().append("circle")
+    .attr("r", function(d) { return d * (w / n); })
+    .attr("fill", "#000")
+    .attr("fill-opacity", 0)
+  .transition()
+    .duration(2000)
+    .delay(function(d) { return d * 100; })
+    .each(loop);
+
+function loop() {
+    var circle = d3.select(this);
+    (function repeat() {
+        circle = circle.transition()
+            .attr("fill-opacity", 0.03)
+          .transition()
+            .attr("fill-opacity", 0)
+            .each("end", repeat);
+    })();
+}
+</script>
