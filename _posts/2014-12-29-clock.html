@@ -1,17 +1,20 @@
 ---
 layout: default
-permalink: /clock
 ---
+<style>
+svg {
+    background: #111;
+}
+</style>
 <script>
 var width = 500,
     height = 500,
     n = 30,
-    c = 30;
+    r = width / 14;
 
 var svg = d3.select("body").append("svg")
     .attr("width", width)
-    .attr("height", height)
-    .attr("background", "black");
+    .attr("height", height);
 
 var ms = 1000,
     s  = ms * 60,
@@ -35,23 +38,29 @@ var data = [
     function(t) { return t.getMilliseconds() / ms; }
 ];
 
+var g = svg.append("g")
+    .attr("transform", "translate(" + [width/2, height/2] + ")");
 
-var g = svg.selectAll("g")
-    .data(data)
-    .enter().append("g");
+data.forEach(function(d, i) {
+    g = g.append("g")
+        .datum(function() { return d; })
+        .attr("class", "dial");
 
-var circles = g.append("circle")
-    .attr("r", function(d, i) { return width/2  * (1 - (i + 1) / (data.length + 1)); })
-    .attr("fill", "#000")
-    .attr("fill-opacity", 0.4);
+    g.append("circle")
+        .attr("r", width/2  * (1 - (i + 1) / (data.length + 1)))
+        .attr("fill", "#fff")
+        .attr("fill-opacity", 0.25)
+});
+
+g = d3.selectAll("g.dial");
 
 d3.timer(function() {
     var t = new Date();
     g.attr("transform", function(d) {
-        var p = d(t) * 2 * Math.PI,
-            x = c * Math.cos(p),
-            y = c * Math.sin(p);
-        return "translate(" + [width/2 + x, height/2 + y] + ")";
+        var p = d(t) * 2 * Math.PI - Math.PI / 2,
+            x = r * Math.cos(p),
+            y = r * Math.sin(p);
+        return "translate(" + [x, y] + ")";
     });
 });
 </script>
