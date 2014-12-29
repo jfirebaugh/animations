@@ -1,0 +1,98 @@
+---
+layout: default
+permalink: /flock
+---
+<script>
+var width = 500,
+    height = 500,
+    n = 30,
+    c = 30;
+
+var svg = d3.select("body").append("svg")
+    .attr("width", width)
+    .attr("height", height);
+
+// http://harry.me/blog/2011/02/17/neat-algorithms-flocking/
+
+function Boid() {
+    var v = [Math.random()*2 - 1, Math.random()*2 - 1],
+        l = [width / 2, height / 2];
+
+    function separate(neighbors) {
+        var mean = new Vector(),
+            count = 0;
+
+        for (var i = 0; i < neighbors.length; i++) {
+            var b = neighbors[i],
+                d = l.distance(b.l);
+            if (d > 0 && d < DESIRED_SEPARATION) {
+                mean.add(Vector.subtract(l, b.l).normalize().divide(d));
+                count++;
+            }
+        }
+
+        if (count > 0) mean.divide(count);
+        return mean;
+    }
+
+    function align(neighbors) {
+        var mean = new Vector(),
+            count = 0;
+
+        for (var i = 0; i < neighbors.length; i++) {
+            var b = neighbors[i],
+                d = l.distance(b.l);
+            if (d > 0 && d < NEIGHBOR_RADIUS) {
+                mean.add(b.v);
+                count++;
+            }
+        }
+
+        if (count > 0) mean.divide(count);
+        mean.limit(MAX_FORCE);
+        return mean;
+    }
+
+    function cohere(neighbors) {
+        var mean = new Vector(),
+            count = 0
+
+        for (var i = 0; i < neighbors.length; i++) {
+            var b = neighbors[i],
+                d = l.distance(b.l);
+            if (d > 0 && d < NEIGHBOR_RADIUS) {
+                mean.add(b.l);
+                count++;
+            }
+        }
+
+        if (count == 0)
+            return mean;
+
+        mean.divide(count);
+
+        var desired = Vector.subtract(mean, l),
+            d = desired.magnitude();
+
+        if (d <= 0)
+            return new Vector();
+
+        return desired
+            .multiply(MAX_SPEED * (d < 100 ? d / 100 : 1))
+            .subtract(v)
+             .limit(MAX_FORCE);
+    }
+
+    function step(neighbors) {
+        var s = separate(neighbors).multiply(SEPARATION_WEIGHT),
+            a = align(neighbors).multiply(ALIGNMENT_WEIGHT),
+            c = cohere(neighbors).multiply(COHESION_WEIGHT);
+
+        v.add(s).add(a).add(c).limit(max_speed);
+        l.add(v);
+        wrap();
+    }
+
+    return { v: v, l: l, step: step };
+}
+</script>
