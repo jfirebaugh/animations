@@ -40,26 +40,18 @@ var paths = svg.selectAll("path")
 d3.timer(function(elapsed) {
     paths.each(function(bins) {
         var path = d3.select(this),
-            min = height;
-
-        for (var i = 0; i < cols; i++) {
-            min = Math.min(min, bins[i]);
-        }
+            mean = d3.sum(bins) / cols,
+            min = d3.min(bins);
 
         if (min >= height) {
             for (var i = 0; i < cols; i++)
                  bins[i] = 0;
-            path.transition()
-                .duration(0)
-                .attr("d", area(bins))
+            path.attr("d", area(bins))
                 .attr("fill-opacity", 0.1);
         } else {
-            bins[Math.floor(Math.random() * cols)] += 5;
-            path.transition()
-                .ease("linear")
-                .duration(50)
-                .attr("d", area(bins))
-                .attr("fill-opacity", 0.1 * (1 - (min / height)));
+            bins[Math.floor(Math.random() * cols)] += 1;
+            path.attr("d", area(bins))
+                .attr("fill-opacity", 0.15 * (1 - (mean / height)));
         }
     });
 });
