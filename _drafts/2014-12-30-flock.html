@@ -5,6 +5,7 @@ permalink: /flock
 <script>
 var width = 500,
     height = 500,
+    depth = 500,
     n = 30,
     c = 30;
 
@@ -18,17 +19,17 @@ var circles = svg.selectAll("circle")
     .data(boids)
     .enter().append("circle")
     .attr("fill", "#000")
-    .attr("fill-opacity", 0.3);
+    .attr("fill-opacity", 0.1);
 
 d3.timer(function() {
     circles
         .each(function(d) { d.step(boids); })
         .attr("cx", function(d) { return d.l.x; })
         .attr("cy", function(d) { return d.l.y; })
-        .attr("r", 5);
+        .attr("r", function(d) { return d.l.z / 10; });
 });
 
-// http://harry.me/blog/2011/02/17/neat-algorithms-flocking/
+// Ported from http://harry.me/blog/2011/02/17/neat-algorithms-flocking/ by Harry Brundage
 
 function Vector(x, y, z) {
     this.x = x || 0;
@@ -93,8 +94,8 @@ var DESIRED_SEPARATION = 20,
     COHESION_WEIGHT    = 1;
 
 function Boid() {
-    var v = new Vector(Math.random()*2 - 1, Math.random()*2 - 1),
-        l = new Vector(Math.random() * width, Math.random() * height);
+    var v = new Vector(Math.random()*2 - 1, Math.random()*2 - 1, Math.random()*2 - 1),
+        l = new Vector(Math.random() * width, Math.random() * height, Math.random() * depth);
 
     function separate(neighbors) {
         var mean = new Vector(),
@@ -178,6 +179,10 @@ function Boid() {
             l.y += height;
         while (l.y > height) 
             l.y -= height;
+        while (l.z < 0)
+            l.z += depth;
+        while (l.z > depth) 
+            l.z -= depth;
     }
 
     return { v: v, l: l, step: step };
