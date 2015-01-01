@@ -32,7 +32,7 @@ var dots = svg.selectAll("circle")
     .enter().append("circle")
     .attr("cx", function(d) { return scale(d.x); })
     .attr("cy", function(d) { return scale(d.y); })
-    .attr("r", 1);
+    .attr("r", 2);
 
 var drops = [],
     t = 0;
@@ -46,7 +46,7 @@ var drops = [],
 d3.timer(function(elapsed) {
     t = elapsed;
     dots.attr("r", function(d) {
-        return Math.max(0, 1 + d3.sum(drops, function(p) {
+        return Math.max(0, 2 + d3.sum(drops, function(p) {
             var dx = d.x - p[0],
                 dy = d.y - p[1],
                 dt = t   - p[2],
