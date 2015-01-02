@@ -1,0 +1,85 @@
+---
+layout: default
+permalink: /plant
+---
+<script>
+d3.svg.turtle = function() {
+    var origin = [0, 0],
+        theta = -25 * Math.PI / 180,
+        length = 10;
+
+    function turtle(string) {
+        var state = { x: origin[0], y: origin[1], t: Math.PI / 2 },
+            stack = [],
+            d = "M" + origin;
+
+        var commands = {
+            'F': function() {
+                state.x -= length * Math.cos(state.t);
+                state.y -= length * Math.sin(state.t);
+                d += "L" + state.x + "," + state.y;
+            },
+            '+': function() {
+                state.t += theta;
+            },
+            '-': function() {
+                state.t -= theta;
+            },
+            '[': function() {
+                stack.push(state);
+                state = Object.create(state);
+            },
+            ']': function() {
+                state = stack.pop();
+                d += "M" + state.x + "," + state.y;
+            }
+        };
+
+        string.split('').forEach(function(c) { commands[c](); });
+        return d;
+    }
+
+    turtle.origin = function(_) {
+        if (!arguments.length) return origin;
+        origin = _;
+        return turtle;
+    }
+
+    turtle.theta = function(_) {
+        if (!arguments.length) return theta;
+        theta = _;
+        return turtle;
+    }
+
+    turtle.length = function(_) {
+        if (!arguments.length) return length;
+        length = _;
+        return turtle;
+    }
+
+    return turtle;
+};
+
+var width = 500,
+    height = 500,
+    cols = 50;
+
+var svg = d3.select("body").append("svg")
+    .attr("width", width)
+    .attr("height", height);
+
+var turtle = d3.svg.turtle()
+    .origin([width/2.8, height]);
+
+svg.append("path")
+    .attr("stroke", "black")
+    .attr("stroke-opacity", 1)
+    .attr("stroke-width", 3)
+    .attr("fill", "none")
+    .attr("d", turtle(grow(4, {"F": "FF-[-F+F+F]+[+F-F-F]"}, "F")));
+
+function grow(n, rules, str) {
+    return n === 0 ? str : grow(n - 1, rules,
+        str.replace(/./g, function(c) { return rules[c] || c; }));
+}
+</script>
