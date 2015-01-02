@@ -52,24 +52,23 @@ var svg = d3.select("body").append("svg")
     .each(grow);
 
 function grow(d) {
-    var x = d3.select(this);
-    x.append("path")
+    d3.select(this).append("path")
         .attr("stroke", "black")
-        .attr("stroke-opacity", 0.7)
+        .attr("stroke-opacity", 0.65)
         .attr("stroke-width", 3)
         .attr("fill", "none")
         .attr("d", function(d) { return d.path; })
         .each(function() { d3.select(this).attr("stroke-dasharray", "0," + this.getTotalLength()); })
       .transition()
-        .ease("linear")
         .duration(1000)
         .attrTween("stroke-dasharray", tweenDash)
-        .each("end", function() {
-            x.selectAll("g")
-                .data(d.children)
-                .enter().append("g")
-                .each(grow);
-        });
+
+    d3.select(this).selectAll("g")
+        .data(d.children)
+        .enter().append("g")
+      .transition()
+        .delay(function(d, i) { return 200 + i * 200; })
+        .each("start", grow);
 }
 
 function l(n, rules, str) {
