@@ -3,73 +3,49 @@ layout: default
 permalink: /plant
 ---
 <script>
-d3.svg.turtle = function() {
-    var origin = [0, 0],
-        theta = -25 * Math.PI / 180,
-        length = 10;
-
-    function turtle(string) {
-        var state = { x: origin[0], y: origin[1], t: Math.PI / 2 },
-            stack = [],
-            d = "M" + origin;
-
-        var commands = {
-            'F': function() {
-                state.x -= length * Math.cos(state.t);
-                state.y -= length * Math.sin(state.t);
-                d += "L" + state.x + "," + state.y;
-            },
-            '+': function() {
-                state.t += theta;
-            },
-            '-': function() {
-                state.t -= theta;
-            },
-            '[': function() {
-                stack.push(state);
-                state = Object.create(state);
-            },
-            ']': function() {
-                state = stack.pop();
-                d += "M" + state.x + "," + state.y;
-            }
-        };
-
-        string.split('').forEach(function(c) { commands[c](); });
-        return d;
-    }
-
-    turtle.origin = function(_) {
-        if (!arguments.length) return origin;
-        origin = _;
-        return turtle;
-    }
-
-    turtle.theta = function(_) {
-        if (!arguments.length) return theta;
-        theta = _;
-        return turtle;
-    }
-
-    turtle.length = function(_) {
-        if (!arguments.length) return length;
-        length = _;
-        return turtle;
-    }
-
-    return turtle;
-};
-
 var width = 500,
     height = 500,
-    cols = 50;
+    cols = 50,
+    theta = -25 * Math.PI / 180,
+    length = 10,
+    x0 = width/2.8,
+    y0 = height,
+    t0 = Math.PI / 2;
+
+function turtle(string) {
+    var state = { x: x0, y: y0, t: t0 },
+        stack = [],
+        d = "M" + x0 + "," + y0;
+
+    var commands = {
+        'F': function() {
+            state.x -= length * Math.cos(state.t);
+            state.y -= length * Math.sin(state.t);
+            d += "L" + state.x + "," + state.y;
+        },
+        '+': function() {
+            state.t += theta;
+        },
+        '-': function() {
+            state.t -= theta;
+        },
+        '[': function() {
+            stack.push(state);
+            state = Object.create(state);
+        },
+        ']': function() {
+            state = stack.pop();
+            d += "M" + state.x + "," + state.y;
+        }
+    };
+
+    string.split('').forEach(function(c) { commands[c](); });
+    return d;
+}
 
 var svg = d3.select("body").append("svg")
     .attr("width", width)
     .attr("height", height);
-
-var turtle = d3.svg.turtle()
-    .origin([width/2.8, height]);
 
 var prev = "";
 
