@@ -71,15 +71,40 @@ var svg = d3.select("body").append("svg")
 var turtle = d3.svg.turtle()
     .origin([width/2.8, height]);
 
-svg.append("path")
-    .attr("stroke", "black")
-    .attr("stroke-opacity", 1)
-    .attr("stroke-width", 3)
-    .attr("fill", "none")
-    .attr("d", turtle(grow(4, {"F": "FF-[-F+F+F]+[+F-F-F]"}, "F")));
+var prev = "";
+
+(function step(i) {
+    var rule = {"F": "FF-[-F+F+F]+[+F-F-F]"},
+        next = grow(1, rule, prev || "F"),
+        sections = turtle(next.slice(prev.length)).split(/(?=M)/),
+        n = 0;
+
+    prev = next;
+
+    svg.selectAll()
+        .data(sections)
+        .enter().append("path")
+        .attr("stroke", "black")
+        .attr("stroke-opacity", 0.7)
+        .attr("stroke-width", 3)
+        .attr("fill", "none")
+        .attr("d", function(d) { return d; })
+        .attr("stroke-dasharray", function() { return "0," + this.getTotalLength(); })
+      .transition()
+        .duration(250)
+        .delay(function(d, i) { return i * 170; })
+        .attrTween("stroke-dasharray", tweenDash)
+        .each("end", function() { if (++n === sections.length - 1 && i < 3) step(i + 1); });
+})(0);
 
 function grow(n, rules, str) {
     return n === 0 ? str : grow(n - 1, rules,
         str.replace(/./g, function(c) { return rules[c] || c; }));
+}
+
+function tweenDash() {
+  var l = this.getTotalLength(),
+      i = d3.interpolateString("0," + l, l + "," + l);
+  return function(t) { return i(t); };
 }
 </script>
