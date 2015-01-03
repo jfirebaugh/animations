@@ -9,47 +9,49 @@ svg {
 <script>
 var width = 500,
     height = 500,
-    n = 30;
+    n = 10,
+    c = width / n;
 
 var svg = d3.select("body").append("svg")
     .attr("width", width)
     .attr("height", height);
 
 var g = svg.selectAll("g")
-    .data([
-        [[0, 0], [1, 1]],
-        [[width, 0], [-1, 1]],
-        [[0, height],[1, -1]],
-        [[width, height], [-1, -1]]
-    ])
+    .data(d3.range(0, n + 1))
     .enter().append("g")
-    .attr("transform", function(d) { return "translate(" + d[0] + ")scale(" + d[1] + ")" });
+    .attr("transform", function(d) { return "translate(0," + (d - 1) * c + ")" });
 
 var rects = g.selectAll("rect")
-    .data(d3.range(1,n))
+    .data(d3.range(0, n + 1))
     .enter().append("rect")
-    .attr("x", function(d) { return d * width / (n - 1); })
+    .attr("x", function(d) { return (d - 1) * c; })
     .attr("y", 0)
-    .attr("width", function(d) { return width - d * width / (n - 1); })
-    .attr("height", function(d) { return d * height / (n - 1); })
-    .attr("rx", width / n)
-    .attr("ry", width / n)
+    .attr("rx", c)
+    .attr("ry", c)
+    .attr("width", c * 2)
+    .attr("height", c * 2)
     .attr("fill", "#fff")
     .attr("fill-opacity", 0);
 
 (function loop() {
-    var duration = Math.random() * 2000 + 3000,
-        delay    = Math.random() * 100  + 200;
-    rects
-      .transition()
-        .ease("linear")
-        .duration(duration)
-        .delay(function(d) { return d * delay; })
-        .attr("fill-opacity", 0.05)
-      .transition()
-        .attr("fill-opacity", 0)
+    g.transition()
+        .duration(n * 500)
+        .delay(function(d) { return d * 200; })
+        .each("start", function() {
+            d3.select(this).selectAll("rect")
+              .transition()
+                .duration(3000)
+                .delay(function(d) { return d * 200; })
+                .attr("fill-opacity", 0.2)
+                .attr("rx", 0)
+                .attr("ry", 0)
+              .transition()
+                .attr("fill-opacity", 0)
+                .attr("rx", c)
+                .attr("ry", c);
+        })
         .each("end", function(d) {
-            if (d === 1) {
+            if (d === n) {
                 loop();
             }
         });
