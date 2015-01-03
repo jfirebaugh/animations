@@ -1,0 +1,57 @@
+---
+layout: default
+---
+<style>
+svg {
+    background: #222;
+}
+</style>
+<script>
+var width = 500,
+    height = 500,
+    n = 30;
+
+var svg = d3.select("body").append("svg")
+    .attr("width", width)
+    .attr("height", height);
+
+var g = svg.selectAll("g")
+    .data([
+        [[0, 0], [1, 1]],
+        [[width, 0], [-1, 1]],
+        [[0, height],[1, -1]],
+        [[width, height], [-1, -1]]
+    ])
+    .enter().append("g")
+    .attr("transform", function(d) { return "translate(" + d[0] + ")scale(" + d[1] + ")" });
+
+var rects = g.selectAll("rect")
+    .data(d3.range(1,n))
+    .enter().append("rect")
+    .attr("x", function(d) { return d * width / (n - 1); })
+    .attr("y", 0)
+    .attr("width", function(d) { return width - d * width / (n - 1); })
+    .attr("height", function(d) { return d * height / (n - 1); })
+    .attr("rx", width / n)
+    .attr("ry", width / n)
+    .attr("fill", "#fff")
+    .attr("fill-opacity", 0);
+
+(function loop() {
+    var duration = Math.random() * 2000 + 3000,
+        delay    = Math.random() * 100  + 200;
+    rects
+      .transition()
+        .ease("linear")
+        .duration(duration)
+        .delay(function(d) { return d * delay; })
+        .attr("fill-opacity", 0.05)
+      .transition()
+        .attr("fill-opacity", 0)
+        .each("end", function(d) {
+            if (d === 1) {
+                loop();
+            }
+        });
+})();
+</script>
