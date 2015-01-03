@@ -74,6 +74,7 @@ function l(n, rules, str) {
     return n === 0 ? str : l(--n, rules, str.replace(/./g, function(c) { return rules[c] || c; }));
 }
 
+// http://bl.ocks.org/mbostock/5649592
 function tweenDash() {
   var l = this.getTotalLength(),
       i = d3.interpolateString("0," + l, l + "," + l);
