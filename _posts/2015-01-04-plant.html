@@ -61,14 +61,14 @@ function grow(d) {
         .attr("d", function(d) { return d.path; })
         .each(function() { d3.select(this).attr("stroke-dasharray", "0," + this.getTotalLength()); })
       .transition()
-        .duration(1000)
+        .duration(2000)
         .attrTween("stroke-dasharray", tweenDash)
 
     d3.select(this).selectAll("g")
         .data(d.children)
         .enter().append("g")
       .transition()
-        .delay(function(d, i) { return 300 + i * 200; })
+        .delay(function(d, i) { return 600 + i * 500; })
         .each("start", grow);
 }
 
