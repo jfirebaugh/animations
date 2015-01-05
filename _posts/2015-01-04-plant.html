@@ -14,7 +14,7 @@ var width = 500,
 
 function tree(string) {
     var stack = [],
-        root = { path: "M" + x0 + "," + y0, children: [] },
+        root = { path: [[x0, y0]], children: [] },
         state = { x: x0, y: y0, t: t0, branch: root };
 
     var commands = {
@@ -22,7 +22,7 @@ function tree(string) {
         'F': function() {
             state.x -= length * Math.cos(state.t);
             state.y -= length * Math.sin(state.t);
-            state.branch.path += "L" + state.x + "," + state.y;
+            state.branch.path[1] = [state.x, state.y];
         },
         '+': function() {
             state.t += theta;
@@ -33,12 +33,18 @@ function tree(string) {
         '[': function() {
             stack.push(state);
             state = Object.create(state);
-            var branch = { path: "M" + state.x + "," + state.y, children: [] };
+            state.depth += 1;
+            var branch = { path: [[state.x, state.y]], children: [] };
             state.branch.children.push(branch);
             state.branch = branch;
         },
         ']': function() {
             state = stack.pop();
+            state = Object.create(state);
+            state.depth += 1;
+            var branch = { path: [[state.x, state.y]], children: [] };
+            state.branch.children.push(branch);
+            state.branch = branch;
         }
     };
 
@@ -50,27 +56,30 @@ var svg = d3.select("body").append("svg")
     .attr("width", width)
     .attr("height", height)
     .datum(tree(l(n, {"X": "F-[[X]-X]+F[+FX]-X", "F": "FF"}, "X")))
-    .each(grow(4));
+    .each(grow(3));
 
 function grow(weight) {
     return function(d) {
-        d3.select(this).append("path")
-            .attr("stroke", "black")
-            .attr("stroke-opacity", 0.65)
-            .attr("stroke-width", weight)
-            .attr("fill", "none")
-            .attr("d", function(d) { return d.path; })
-            .each(function() { d3.select(this).attr("stroke-dasharray", "0," + this.getTotalLength()); })
-          .transition()
-            .duration(2000)
-            .attrTween("stroke-dasharray", tweenDash)
+        if (d.path[1]) {
+            d3.select(this).append("path")
+                .attr("stroke", "black")
+                .attr("stroke-opacity", 0.9)
+                .attr("stroke-width", weight)
+                .attr("fill", "none")
+                .attr("d", "M" + d.path[0] + "L" + d.path[1])
+                .each(function() { d3.select(this).attr("stroke-dasharray", "0," + this.getTotalLength()); })
+              .transition()
+                .ease("linear")
+                .duration(400)
+                .attrTween("stroke-dasharray", tweenDash)
+        }
 
         d3.select(this).selectAll("g")
             .data(d.children)
             .enter().append("g")
           .transition()
-            .delay(function(d, i) { return 600 + i * 500; })
-            .each("start", grow(weight - 0.5));
+            .delay(400)
+            .each("start", grow(weight - 0.25));
     }
 }
 
