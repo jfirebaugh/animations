@@ -10,10 +10,15 @@ html, body {
 }
 
 body, #prev, #next {
+    height: 100%;
+
     display: flex;
     flex-direction: column;
     justify-content: center;
-    height: 100%;
+
+    display: -webkit-flex;
+    -webkit-flex-direction: column;
+    -webkit-justify-content: center;
 }
 
 #prev, #next {
