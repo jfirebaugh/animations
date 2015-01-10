@@ -17,14 +17,14 @@ var paths = svg.selectAll("path")
     .enter().append("path")
     .attr("fill", "none")
     .attr("stroke", "#111")
-    .attr("stroke-width", width)
+    .attr("stroke-width", width / 2)
     .attr("stroke-opacity", 0.02);
 
 d3.timer(function(t) {
     paths.attr("d", function(d) {
         var a  = d * Math.PI * 2 / n,
-            r0 = width / 2 * Math.sin(d * t / 5000 / n),
-            r1 = width / 2 * Math.cos(d * t / 5000 / n) / 4;
+            r0 = width / 2 * Math.sin(d * t / 2500 / n),
+            r1 = width / 2 * Math.cos(d * t / 2500 / n) / 4;
         return "M" + [r0 * Math.cos(a), r0 * Math.sin(a)] +
                "L" + [r1 * Math.cos(a), r1 * Math.sin(a)];
     });
