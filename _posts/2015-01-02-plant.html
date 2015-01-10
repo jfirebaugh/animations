@@ -47,6 +47,7 @@ function tree(string) {
 var svg = d3.select("body").append("svg")
     .attr("width", width)
     .attr("height", height)
+    .style("background", "#d1d1d1")
     .datum(tree(l(4, {"F": "FF-[-F+F+F]+[+F-F-F]"}, "F")))
     .each(grow);
 

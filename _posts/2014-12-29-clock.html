@@ -1,11 +1,6 @@
 ---
 layout: default
 ---
-<style>
-svg {
-    background: #111;
-}
-</style>
 <script>
 var width = 500,
     height = 500,
@@ -14,7 +9,8 @@ var width = 500,
 
 var svg = d3.select("body").append("svg")
     .attr("width", width)
-    .attr("height", height);
+    .attr("height", height)
+    .style("background", "#111");
 
 var ms = 1000,
     s  = ms * 60,

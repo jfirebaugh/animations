@@ -1,20 +1,6 @@
 ---
 layout: default
 ---
-<style>
-svg {
-    background: #1e1e1e;
-}
-.moon {
-    fill: #D1D1D1;
-}
-.snow {
-    fill: url(#snow);
-}
-.shadow {
-    fill: rgba(16,16,16,.8);
-}
-</style>
 <svg>
     <defs>
         <linearGradient id="snow" x1="0" x2="0" y1="0" y2="1">
@@ -33,18 +19,21 @@ var width = 500,
 
 var svg = d3.select("svg")
     .attr("width", width)
-    .attr("height", height);
+    .attr("height", height)
+    .style("background", "#1e1e1e");
 
 var defs = svg.select("defs");
 
 var moon = svg.append("circle")
     .attr("class", "moon")
+    .attr("fill", "#d1d1d1")
     .attr("cx", mx)
     .attr("cy", my)
     .attr("r", 45);
 
 svg.append("rect")
     .attr("class", "snow")
+    .attr("fill", "url(#snow)")
     .attr("x", -20)
     .attr("y", 0.45 * height)
     .attr("width", width + 20)
@@ -53,6 +42,7 @@ svg.append("rect")
 
 svg.append("rect")
     .attr("class", "snow")
+    .attr("fill", "url(#snow)")
     .attr("x", 0)
     .attr("y", 0.45 * height)
     .attr("width", width + 20)
@@ -61,6 +51,7 @@ svg.append("rect")
 
 svg.append("rect")
     .attr("class", "snow")
+    .attr("fill", "url(#snow)")
     .attr("x", 0)
     .attr("y", 0.5 * height)
     .attr("width", width)
@@ -100,9 +91,10 @@ var g = svg.selectAll("g")
 
 g.append("path")
     .attr("class", "shadow")
+    .attr("fill", "rgba(16,16,16,.8)");
 
 g.append("path")
-    .attr("class", "tree")
+    .attr("class", "tree");
 
 function tree(d, i) {
     var g = d3.select(this),

@@ -1,0 +1,63 @@
+---
+---
+<!DOCTYPE html>
+<meta charset="utf-8">
+<body>
+<script src="{{site.baseurl}}/d3.v3.min.js"></script>
+<style>
+    html, body {
+        height: 100%;
+        background: #222;
+        margin: 25px;
+    }
+
+    #prev, #next {
+        height: 100%;
+
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+
+        display: -webkit-flex;
+        -webkit-flex-direction: column;
+        -webkit-justify-content: center;
+
+        position: fixed;
+        top: 0;
+        color: #d1d1d1;
+        font-size: 70px;
+        text-decoration: none;
+        padding: 20px;
+    }
+
+    #prev {
+        left: 0;
+    }
+
+    #next {
+        right: 0;
+    }
+
+    img {
+        margin: 25px;
+    }
+</style>
+{% if paginator.previous_page %}
+<a id="prev" href="{{site.baseurl}}{{paginator.previous_page_path}}">‹</a>
+{% endif %}
+{% for post in paginator.posts %}
+<a href="{{site.baseurl}}{{post.url}}"><img width="250px" height="250px" src="{{site.baseurl}}/static/{{post.date | date: '%Y-%m-%d'}}.svg"/></a>
+{% endfor %}
+{% if paginator.next_page %}
+<a id="next" href="{{site.baseurl}}{{paginator.next_page_path}}">›</a>
+{% endif %}
+<script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-29668835-1', 'auto');
+    ga('send', 'pageview');
+
+</script>

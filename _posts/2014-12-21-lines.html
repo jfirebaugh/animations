@@ -1,17 +1,6 @@
 ---
 layout: default
 ---
-<style>
-svg {
-    background: #111;
-}
-path {
-    stroke: #D1D1D1;
-    stroke-width: 2;
-    fill: none;
-    line-cap: round;
-}
-</style>
 <script>
 var width = 500,
     height = 500,
@@ -30,7 +19,8 @@ var pad = scale(0),
 
 var svg = d3.select("body").append("svg")
     .attr("width", width)
-    .attr("height", height);
+    .attr("height", height)
+    .style("background", "#111");
 
 var columns = svg.selectAll("g")
     .data(d3.range(0, 8))
@@ -43,6 +33,10 @@ var paths = columns.selectAll("g")
     .attr("transform", function(d) { return "translate(0," + y(d) + ")"; })
 
 paths.append("path")
+    .attr("stroke", "#d1d1d1")
+    .attr("stroke-width", 2)
+    .attr("fill", "none")
+    .attr("line-cap", "round")
     .attr("d", "M0,0 L" + band + ",0");
 
 columns.transition()

@@ -1,19 +1,14 @@
 ---
 layout: default
 ---
-<style>
-path {
-    stroke: black;
-    fill: none;
-}
-</style>
 <script>
 var width = 500,
     height = 500;
 
 var svg = d3.select("body").append("svg")
     .attr("width", width)
-    .attr("height", height);
+    .attr("height", height)
+    .style("background", "#d1d1d1");
 
 setInterval(function () {
     var paths = svg.selectAll(".line")
@@ -21,6 +16,8 @@ setInterval(function () {
         .enter().append("g");
 
     paths.append("path")
+        .attr("stroke", "black")
+        .attr("fill", "none")
         .attr("d", function() {
             var y = boxMuller(0.2) * 250;
             return "M0,0 Q250," + (y/2 + Math.random() * 20) + " 500," + y;

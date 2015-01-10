@@ -1,14 +1,6 @@
 ---
 layout: default
 ---
-<style>
-svg {
-    background: #111;
-}
-text {
-    fill: #D1D1D1;
-}
-</style>
 <script>
 var width = 500,
     height = 500,
@@ -17,11 +9,13 @@ var width = 500,
 
 var svg = d3.select("body").append("svg")
     .attr("width", width)
-    .attr("height", height);
+    .attr("height", height)
+    .style("background", "#111");
 
 var stars = svg.selectAll("text")
     .data(d3.range(0, n))
     .enter().append("text")
+    .attr("fill", "#d1d1d1")
     .attr("font-size", 14)
     .attr("dy", ".35em")
     .attr("text-anchor", "middle")

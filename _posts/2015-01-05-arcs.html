@@ -1,14 +1,6 @@
 ---
 layout: default
 ---
-<style>
-svg {
-    background: #111;
-}
-path {
-    fill: #D1D1D1;
-}
-</style>
 <script>
 var width = 500,
     height = 500,
@@ -30,6 +22,7 @@ var arc = d3.svg.arc();
 var g = d3.select("body").append("svg")
     .attr("width", width)
     .attr("height", height)
+    .style("background", "#111")
   .append("g")
     .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")rotate(0)");
 
@@ -49,6 +42,7 @@ var path = g.selectAll("path")
     .data(pie(data))
   .enter().append("path")
     .attr("d", arc)
+    .attr("fill", "#d1d1d1")
     .attr("fill-opacity", function(d) { return Math.random(); });
 
 (function loop2() {

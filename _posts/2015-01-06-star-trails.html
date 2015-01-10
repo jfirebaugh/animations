@@ -1,11 +1,6 @@
 ---
 layout: default
 ---
-<style>
-svg {
-    background: #111;
-}
-</style>
 <script>
 var width = 500,
     height = 500,
@@ -21,6 +16,7 @@ var data = d3.range(0, n).map(function() {
 var g = d3.select("body").append("svg")
     .attr("width", width)
     .attr("height", height)
+    .style("background", "#111")
   .append("g")
     .attr("transform", "translate(" + (Math.random() * width / 2) + "," +
                                       (Math.random() * height / 2) + ")");
