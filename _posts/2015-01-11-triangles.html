@@ -1,0 +1,47 @@
+---
+layout: default
+---
+<script>
+var width = 500,
+    height = 500,
+    n = 5,
+    a = width / n,
+    h = a * Math.sqrt(3) / 2;
+
+var svg = d3.select("body").append("svg")
+    .attr("width", width)
+    .attr("height", height)
+    .style("background", "#111");
+
+var g = svg.selectAll("g")
+    .data(d3.range(-1, 2 * height / h + 1))
+    .enter().append("g")
+    .attr("transform", function(d) {
+        return "translate(" + [(d % 2) * a / 4, d * h / 2] + ")";
+    });
+
+var triangles = g.selectAll("path")
+    .data(d3.range(-1, n + 1))
+    .enter().append("path")
+    .attr("fill", "#fff")
+    .attr("fill-opacity", 0.33)
+    .attr("d", "M" + [0, 0] +
+               "L" + [-a/2, h] +
+               "L" + [+a/2, h] + "Z");
+
+(function loop() {
+    var t = triangles;
+
+    d3.range(0, 6).forEach(function(k) {
+        t = t.transition()
+            .duration(1000)
+            .attrTween("transform", function(d) {
+                return function(i) {
+                    return "translate(" + [d * a, 0] + ")rotate(" + [60 * k + 60 * i, a / 4, h / 4] + ")";
+                };
+            });
+    });
+
+    setTimeout(loop, 6000);
+})();
+</script>
