@@ -43,6 +43,8 @@ body, #prev, #next {
 svg {
     margin: auto;
 }
+
+{% include footer.css %}
 </style>
 {% if page.previous %}
 <a id="prev" href="{{site.baseurl}}{{page.previous.url}}">‹</a>
@@ -51,6 +53,11 @@ svg {
 {% if page.next %}
 <a id="next" href="{{site.baseurl}}{{page.next.url}}">›</a>
 {% endif %}
+<footer>
+    <a href="{{site.baseurl}}/"><i class="fa fa-th"></i></a>
+    <a href="https://twitter.com/jfire"><i class="fa fa-twitter"></i></a>
+    <a href="https://github.com/jfirebaugh/animations/blob/gh-pages/{{page.path}}"><i class="fa fa-github"></i></a>
+</footer>
 <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),

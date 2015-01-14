@@ -1,0 +1,35 @@
+@font-face {
+    font-family: 'FontAwesome';
+    src: url('{{site.baseurl}}/fonts/fontawesome-webfont.eot?v=4.2.0');
+    src: url('{{site.baseurl}}/fonts/fontawesome-webfont.eot?#iefix&v=4.2.0') format('embedded-opentype'), url('{{site.baseurl}}/fonts/fontawesome-webfont.woff?v=4.2.0') format('woff'), url('{{site.baseurl}}/fonts/fontawesome-webfont.ttf?v=4.2.0') format('truetype'), url('{{site.baseurl}}/fonts/fontawesome-webfont.svg?v=4.2.0#fontawesomeregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+.fa {
+    display: inline-block;
+    font: normal normal normal 14px/1 FontAwesome;
+    font-size: inherit;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+.fa-twitter:before {
+    content: "\f099";
+}
+.fa-github:before {
+    content: "\f09b";
+}
+.fa-th:before {
+    content: "\f00a";
+}
+
+footer {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+a {
+    color: #d1d1d1;
+    text-decoration: none;
+    padding: 10px;
+}
