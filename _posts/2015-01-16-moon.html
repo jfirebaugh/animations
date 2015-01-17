@@ -4,8 +4,8 @@ layout: default
 <script>
 var width = 500,
     height = 500,
-    n = 8,
-    r = 0.4 * width,
+    n = 32,
+    r = 0.45 * width,
     π = Math.PI;
 
 var svg = d3.select("body").append("svg")
@@ -16,20 +16,20 @@ var svg = d3.select("body").append("svg")
 var g = svg.append("g");
 
 var moons = g.selectAll("path")
-    .data(d3.range(1, n + 1))
+    .data(d3.range(0, n))
     .enter().append("path")
     .attr("fill", "#000")
-    .attr("fill-opacity", 1 / n);
+    .attr("fill-opacity", 0.05);
 
 d3.timer(function(t) {
-    g.attr("transform", "translate(" + [width / 2, height / 2] + ")rotate(" + t / 200 + ")");
+    g.attr("transform", "translate(" + [width / 2, height / 2] + ")");
 
     moons.attr("transform", function(d) {
-        return "rotate(" + 360 * d * t / 20000 + ")";
+        return "rotate(" + 360 * d * t / 60000 + ")";
     });
 
     moons.attr("d", function(d) {
-        return moon((π * d * (t / 25000)) % (2 * π));
+        return moon(0.5 * π * Math.sin(d * t / 70000));
     });
 });
 
