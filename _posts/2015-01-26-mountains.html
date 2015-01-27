@@ -16,11 +16,10 @@ var filter = svg.append("filter")
     .attr("x", -100)
     .attr("y", -100)
     .attr("width", width + 200)
-    .attr("height", 200)
+    .attr("height", 300)
     .attr("filterUnits", "userSpaceOnUse")
     .append("feGaussianBlur")
-    .attr("stdDeviation", 20)
-    .attr("in", "SourceAlpha");
+    .attr("stdDeviation", 20);
 
 var data = d3.range(rows).map(function() {
     var x = Math.random() * width;
@@ -33,7 +32,7 @@ var area = d3.svg.area()
 
 var scale = d3.scale.linear()
     .domain([0, rows])
-    .range(["#d1d1d1", "#111"]);
+    .range(["#d1d1d1", "#222"]);
 
 var groups = svg.selectAll("g")
     .data(data)
@@ -46,7 +45,9 @@ groups.append("path")
     .attr("fill", function(d, i) { return scale(i); })
     .attr("d", area);
 
-var circles = groups.append("g")
+var circles = groups
+    .filter(function(d, i) { return i != rows - 1; })
+    .append("g")
     .attr("filter", "url(#blur)")
     .selectAll("circle")
     .data(function(d, i) {
@@ -61,14 +62,14 @@ var circles = groups.append("g")
     .attr("cy", 20)
     .attr("ry", 20)
     .attr("rx", 60)
-    .attr("fill", function(d) {
-        return scale(d.i);
+    .style("fill", function(d) {
+        return scale(d.i - 5);
     })
     .attr("fill-opacity", 0.2);
 
 d3.timer(function() {
-    circles.each(function(d) {
-        d.x += d.i / 3;
+    circles.each(function(d, i) {
+        d.x += d.i / 3 + Math.min(i / 2, 1);
         if (d.x > width + 100) d.x = -100;
     });
     circles.attr("cx", function(d) { return d.x; })
