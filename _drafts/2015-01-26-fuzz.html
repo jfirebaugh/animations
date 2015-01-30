@@ -1,0 +1,48 @@
+---
+layout: default
+---
+<script>
+var width = 500,
+    height = 500,
+    n = 100,
+    step = height / step,
+    samples = d3.range(-width / 2, width / 2);
+
+var svg = d3.select("body").append("svg")
+    .attr("width", width)
+    .attr("height", height)
+    .style("background", "#d1d1d1");
+
+var filter = svg.append("filter")
+    .attr("id", "blur")
+    .attr("x", -width)
+    .attr("y", 0)
+    .attr("width", width * 2)
+    .attr("height", height)
+    .attr("filterUnits", "userSpaceOnUse")
+    .append("feGaussianBlur")
+    .attr("in", "SourceAlpha");
+
+var path = svg.append("g")
+    .attr("filter", "url(#blur)")
+    .append("path")
+    .attr("fill", "none")
+    .attr("stroke", "#111")
+    .attr("stroke-width", 16)
+    .attr("stroke-opacity", 1)
+    .attr("transform", "translate(" + [width / 2, height / 2] + ")");
+
+d3.timer(function(t) {
+    function f(x) {
+        var c = Math.sin(t / 1000);
+        return 100 * Math.sin(c * x / (4 * Math.PI)) +
+                25 * Math.sin(c * x / (16 * Math.PI));
+    }
+
+    path.attr("d", "M" + samples.map(function(x) {
+        return [x, f(x)];
+    }).join("L"));
+
+    filter.attr("stdDeviation", 25 * (Math.cos(t / 500) + 1) )
+});
+</script>
