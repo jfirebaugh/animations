@@ -5,7 +5,7 @@ layout: default
 // Math from https://github.com/d3/d3-plugins/tree/master/hexbin
 var width = 500,
     height = 500,
-    n = 20,
+    n = 30,
     r = width / n / 2,
     dx = r * 2 * Math.sin(Math.PI / 3),
     dy = r * 1.5;
@@ -36,7 +36,7 @@ var hexes = svg.selectAll("g")
 
 d3.timer(function(t) {
     hexes.attr("transform", function(d, i) {
-        return "scale(" + (Math.sin(i / 5 + t / 2000) + 1) + ")";
+        return "scale(" + (Math.sin(i * t / 70000) + 1) + ")";
     });
 });
 
