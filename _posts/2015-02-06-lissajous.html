@@ -1,0 +1,36 @@
+---
+layout: default
+---
+<script>
+var width = 500,
+    height = 500;
+
+var svg = d3.select("body").append("svg")
+    .attr("width", width)
+    .attr("height", height)
+    .style("background", "#d1d1d1")
+    .append("g")
+    .attr("transform", "translate(" + [width / 2, height / 2] + ")");
+
+var spiral = svg.append("path")
+    .attr("fill", "none")
+    .attr("stroke", "#111")
+    .attr("stroke-width", 2);
+
+var range = d3.range(0, 8 * Math.PI, 0.01);
+
+var d = 0,
+    a = 0,
+    b = 1;
+
+d3.timer(function(t) {
+    spiral.attr("d", "M" + range.map(function(p) {
+        var a = (Math.sin(t / 5000) + 1) / 2,
+            b = (Math.cos(t / 7000) + 1) / 2;
+        return [
+            width / 4 * Math.sin(a * p + Math.cos(t / 1000)),
+            height / 4 * Math.sin(b * p)
+        ];
+    }).join("L"));
+})
+</script>
