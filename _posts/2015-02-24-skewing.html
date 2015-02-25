@@ -1,0 +1,49 @@
+---
+layout: default
+---
+<script>
+var width = 500,
+    height = 500,
+    n = 10;
+
+var svg = d3.select("body").append("svg")
+    .attr("width", width)
+    .attr("height", height)
+    .style("background", "#fff");
+
+var data = d3.range(0, n * n)
+    .map(function(d, i) {
+        var x = d % n,
+            y = ~~(d / n);
+        return { x: x, y: y, i: i };
+    });
+
+var g = svg.selectAll("g")
+    .data(data)
+    .enter().append("g")
+    .attr("transform", function(d) {
+        return "translate(" + [d.x * width / n, d.y * height / n] + ")";
+    });
+
+g.append("rect")
+    .attr("x", 0)
+    .attr("y", 0)
+    .attr("width", width / n)
+    .attr("height", height / n / 2)
+    .attr("fill-opacity", 0.9)
+    .attr("fill", "#d1d1d1");
+
+g.append("rect")
+    .attr("x", 0)
+    .attr("y", height / n / 2)
+    .attr("width", width / n)
+    .attr("height", height / n / 2)
+    .attr("fill-opacity", 0.9)
+    .attr("fill", "#111");
+
+d3.timer(function(t) {
+    g.attr("transform", function(d) {
+        return "translate(" + [d.x * width / n, d.y * height / n] + ")skewX(" + 20 * Math.cos(d.x + d.y + t / 200) + ")skewY(" + 20 * Math.sin(d.x + d.y + t / 200) + ")";
+    });
+});
+</script>
