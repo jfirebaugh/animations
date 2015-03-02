@@ -1,0 +1,50 @@
+---
+layout: default
+---
+<script>
+// Math from https://github.com/d3/d3-plugins/tree/master/hexbin
+var width = 500,
+    height = 500,
+    n = 4,
+    r = width / n / 2,
+    dx = r * 2 * Math.sin(Math.PI / 3),
+    dy = r * 1.5;
+
+var svg = d3.select("body").append("svg")
+    .attr("width", width)
+    .attr("height", height)
+    .style("background", "#111");
+
+var hexes = svg.append("g")
+    .attr("transform", "translate(" + [-20, -15] + ")")
+    .append("path")
+    .attr("fill", "#fff")
+    .attr("fill-opacity", 0.8)
+    .attr("fill-rule", "evenodd");
+
+d3.timer(function(t) {
+    hexes.attr("d", function() {
+        var d = "";
+        for (var y = -r, odd = false; y < height + 2 * r; y += dy, odd = !odd) {
+            for (var x = odd ? -dx / 2 : 0; x < width + dx; x += dx) {
+                d += "M" + [x, y];
+                d += "m" + dodecagon(200 + 100 * Math.sin(t / 4000), t / 3000).join("l") + "z";
+            }
+        }
+        return d;
+    });
+});
+
+function dodecagon(radius, r) {
+    var x0 = 0, y0 = 0;
+    return d3.range(0 + r, 2 * Math.PI + r, Math.PI / 6).map(function(angle) {
+        var x1 = Math.sin(angle) * radius,
+            y1 = -Math.cos(angle) * radius,
+            dx = x1 - x0,
+            dy = y1 - y0;
+        x0 = x1;
+        y0 = y1;
+        return [dx, dy];
+    });
+}
+</script>
