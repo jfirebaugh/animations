@@ -28,7 +28,7 @@ d3.timer(function(t) {
     })
 
     circles.attr("r", function(d) {
-        return 250 + 150 * Math.cos(t / 10000)
+        return 250 + 150 * Math.sin(3 * Math.PI / 2 + t / 10000)
     });
 });
 </script>
