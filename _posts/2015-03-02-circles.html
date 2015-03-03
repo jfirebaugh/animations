@@ -1,0 +1,34 @@
+---
+layout: default
+---
+<script>
+var width = 500,
+    height = 500,
+    n = 32;
+
+var svg = d3.select("body").append("svg")
+    .attr("width", width)
+    .attr("height", height)
+    .style("background", "#111");
+
+var circles = svg.selectAll("circle")
+    .data(d3.range(n))
+    .enter().append("circle")
+    .attr("fill", "#fff");
+
+d3.timer(function(t) {
+    circles.attr("fill-opacity", 0.04)
+
+    circles.attr("cx", function(d) {
+        return width / 2 + width / 2 * Math.cos(2 * Math.PI * d / n + (d % 8) * t / 200000);
+    })
+
+    circles.attr("cy", function(d) {
+        return width / 2 + width / 2 * Math.sin(2 * Math.PI * d / n + (d % 8) * t / 200000);
+    })
+
+    circles.attr("r", function(d) {
+        return 250 + 150 * Math.cos(t / 10000)
+    });
+});
+</script>
