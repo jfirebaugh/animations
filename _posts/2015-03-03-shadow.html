@@ -1,0 +1,47 @@
+---
+layout: default
+---
+<script>
+var width = 500,
+    height = 500,
+    n = 50,
+    data = d3.range(1, n + 1);
+
+var svg = d3.select("body").append("svg")
+    .attr("width", width)
+    .attr("height", height)
+    .style("background", "#fff");
+
+var gradients = svg.selectAll("linearGradient")
+    .data(data)
+    .enter().append("linearGradient")
+    .attr("id", function(d) { return "gradient" + d; });
+
+gradients.append("stop")
+    .attr("offset", 0)
+    .attr("stop-color", "rgba(0,0,0,0)");
+var stops = gradients.append("stop")
+    .attr("stop-color", "rgba(0,0,0,0.05)");
+gradients.append("stop")
+    .attr("offset", 1)
+    .attr("stop-color", "rgba(0,0,0,0)");
+
+var rects = svg.selectAll("rect")
+    .data(data)
+    .enter().append("rect")
+    .attr("x", 0)
+    .attr("y", 0)
+    .attr("width", width)
+    .attr("height", height)
+    .attr("fill", function(d) { return "url(#gradient" + d + ")"; });
+
+function ease(t) {
+    return t < 0.5 ? 2 * t : 1 - (2 * t - 1);
+}
+
+d3.timer(function(t) {
+    stops.attr("offset", function(d) {
+        return ease(t * d % 100000 / 100000);
+    });
+});
+</script>
