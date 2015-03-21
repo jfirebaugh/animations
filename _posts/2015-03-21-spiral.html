@@ -1,0 +1,52 @@
+---
+layout: default
+---
+<script>
+var width = 500,
+    height = 500,
+    cols = 100,
+    a = 1,
+    b = 0.3;
+
+var svg = d3.select("body").append("svg")
+    .attr("width", width)
+    .attr("height", height)
+    .style("background", "#111")
+    .append("g")
+    .attr("transform", "translate(" + [width / 2, height / 2] + ")");
+
+var spiral = svg.selectAll("g")
+    .data(d3.range(20))
+    .enter().append("g");
+
+var r1 = d3.range(0, 7 * Math.PI, 0.1),
+    r2 = r1.slice().reverse();
+
+spiral.append("path")
+    .attr("fill", "#fff")
+    .attr("fill-opacity", 0.1)
+    .attr("d", function(d, i) {
+        return "M" +
+            r1.map(function(θ) {
+                var r = a * Math.exp(b * θ);
+                return [
+                    r * Math.cos(θ),
+                    r * Math.sin(θ)
+                ];
+            }).join("L")
+            + "L" +
+            r2.map(function(θ) {
+                var r = a * Math.exp(b * θ);
+                return [
+                    r * Math.cos(θ + 3),
+                    r * Math.sin(θ + 3)
+                ];
+            }).join("L") + "Z";
+    });
+
+d3.timer(function(t) {
+    spiral.attr("transform", function(d, i) {
+        return "rotate(" + [(d * t / 200) % 360] + ")"
+    });
+});
+</script>
