@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<title>D3D3CONF</title>
+<body>
+<script src="../d3.v3.min.js"></script>
+<style>
+  html, body, iframe {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    border: 0;
+    padding: 0;
+    overflow: hidden;
+  }
+
+  iframe {
+    position: absolute;
+  }
+</style>
+<iframe id="one"></iframe>
+<iframe id="two"></iframe>
+<script>
+  var pieces = [
+      "waves.html",
+      "noise.html",
+      "lights.html",
+      "star-trails.html",
+      "phase-shift.html",
+      "lights2.html",
+      "spiral.html",
+      "sunflower.html"
+  ];
+
+  var front = d3.select("#one"),
+    back = d3.select("#two"),
+    tmp,
+    i = 0;
+
+  (function show() {
+    front
+      .attr("src", pieces[i])
+      .transition()
+      .duration(3000)
+      .style("opacity", 1);
+
+    back
+      .transition()
+      .duration(3000)
+      .style("opacity", 0)
+      .each("end", function() {
+        d3.select(this).attr("src", "");
+      });
+
+    tmp = front;
+    front = back;
+    back = tmp;
+    i = (i + 1) % pieces.length;
+
+    setTimeout(show, 60000);
+  })();
+</script>

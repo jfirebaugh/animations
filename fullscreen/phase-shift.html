@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<body>
+<script src="../d3.v3.min.js"></script>
+<style>
+    html, body {
+        height: 100%;
+        background: #222;
+        margin: 0;
+    }
+</style>
+<script>
+var body = d3.select("body"),
+    width = body.property("offsetWidth"),
+    height = body.property("offsetHeight"),
+    n = 100;
+
+var svg = d3.select("body").append("svg")
+    .attr("width", width)
+    .attr("height", height)
+    .style("background", "#ddd")
+    .append("g")
+    .attr("transform", "translate(" + [width / 2, height / 2] + ")");
+
+var circles = svg.selectAll("ellipse")
+    .data(d3.range(n))
+    .enter().append("ellipse")
+    .attr("fill", "none")
+    .attr("stroke", "#222")
+    .attr("stroke-width", 0.5)
+    .attr("rx", height / 4)
+    .attr("ry", height / 4);
+
+d3.timer(function(t) {
+    circles.attr("cx", function(d) {
+        var a = d * Math.PI * 2 / n,
+            r = height / 5 * Math.sin(d * t / 1000 / n);
+        return r * Math.cos(a);
+    });
+
+    circles.attr("cy", function(d) {
+        var a = d * Math.PI * 2 / n,
+            r = height / 5 * Math.sin(d * t / 1000 / n);
+        return r * Math.sin(a);
+    });
+});
+</script>

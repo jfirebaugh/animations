@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<body>
+<script src="../d3.v3.min.js"></script>
+<style>
+    html, body {
+        height: 100%;
+        background: #222;
+        margin: 0;
+    }
+</style>
+<script>
+var body = d3.select("body"),
+    width = body.property("offsetWidth"),
+    height = body.property("offsetHeight"),
+    rows = 30,
+    cols = 2;
+
+var svg = d3.select("body").append("svg")
+    .attr("width", width)
+    .attr("height", height)
+    .style("background", "#111");
+
+var g = svg.selectAll("g")
+    .data(d3.range(1, rows + 1))
+    .enter().append("g")
+    .attr("transform", function(d, i) {
+        return "translate(" + [0, 5 + i * height / rows] + ")";
+    });
+
+var paths = g.append("path")
+    .attr("fill", "none")
+    .attr("stroke", "#fff")
+    .attr("stroke-width", 100)
+    .attr("stroke-opacity", 0.2);
+
+d3.timer(function(t) {
+    paths.attr("d", function(r) {
+        return d3.svg.line()
+            .interpolate("basis")
+            .y(function(d) { return 10 * Math.cos(d + r * t / 4000); })
+            .x(function(d) { return d * width / cols; })
+            (d3.range(-3, cols + 2));
+    });
+});
+</script>
