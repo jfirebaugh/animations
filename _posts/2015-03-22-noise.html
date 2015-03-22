@@ -1,0 +1,41 @@
+---
+layout: default
+---
+<script src="../perlin.js"></script>
+<script>
+var width = 500,
+    height = 500,
+    n = 25;
+
+noise.seed(Math.random());
+
+var svg = d3.select("body").append("svg")
+    .attr("width", width)
+    .attr("height", height)
+    .style("background", "#d1d1d1");
+
+var scale = d3.scale.ordinal()
+    .domain(d3.range(-n / 2, n / 2 + 1))
+    .rangePoints([0, width], 1.3);
+
+var data = [];
+for (var x = -n / 2; x <= n / 2; x++) {
+    for (var y = -n / 2; y <= n / 2; y++) {
+        data.push({x: x, y: y});
+    }
+}
+
+var lines = svg.selectAll("path")
+    .data(data)
+    .enter().append("path")
+    .attr("fill", "#111")
+    .attr("d", "M-6,2,L12,0L-6,-2Z");
+
+d3.timer(function(t) {
+    lines.attr("transform", function(d) {
+        var r = 360 * noise.simplex3(d.x / 60, d.y / 60, t / 7000);
+        return "translate(" + [scale(d.x), scale(d.y)] + ")rotate(" + r + ")";
+    });
+});
+
+</script>
