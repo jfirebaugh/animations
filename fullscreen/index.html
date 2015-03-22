@@ -10,6 +10,7 @@
     border: 0;
     padding: 0;
     overflow: hidden;
+    background: black;
   }
 
   iframe {
@@ -20,14 +21,14 @@
 <iframe id="two"></iframe>
 <script>
   var pieces = [
-      "waves.html",
-      "noise.html",
-      "lights.html",
-      "star-trails.html",
-      "phase-shift.html",
-      "lights2.html",
-      "spiral.html",
-      "sunflower.html"
+      ["waves.html", 30],
+      ["noise.html", 30],
+      ["lights.html", 30],
+      ["star-trails.html", 45],
+      ["phase-shift.html", 40],
+      ["lights2.html", 45],
+      ["spiral.html", 45],
+      ["sunflower.html", 60]
   ];
 
   var front = d3.select("#one"),
@@ -35,9 +36,9 @@
     tmp,
     i = 0;
 
-  (function show() {
+  function show() {
     front
-      .attr("src", pieces[i])
+      .attr("src", pieces[i][0])
       .transition()
       .duration(3000)
       .style("opacity", 1);
@@ -53,8 +54,17 @@
     tmp = front;
     front = back;
     back = tmp;
-    i = (i + 1) % pieces.length;
+    i++;
 
-    setTimeout(show, 60000);
-  })();
+    if (i < pieces.length) {
+        setTimeout(show, pieces[i - 1][1] * 1000);
+    } else {
+        back
+            .transition()
+            .duration(3000)
+            .style("opacity", 0);
+    }
+  }
+
+  setTimeout(show, 3000);
 </script>
