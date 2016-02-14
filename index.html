@@ -49,7 +49,8 @@
 <a id="prev" href="{{site.baseurl}}{{paginator.previous_page_path}}">‹</a>
 {% endif %}
 {% for post in paginator.posts %}
-<a href="{{site.baseurl}}{{post.url}}"><img width="250px" height="250px" src="{{site.baseurl}}/static/{{post.date | date: '%Y-%m-%d'}}.svg"/></a>
+<a href="{{site.baseurl}}{{post.url}}"><img width="250px" height="250px"
+  src="{{site.baseurl}}/static/{{post.date | date: '%Y-%m-%d'}}.{% if post.layout == 'glsl' %}png{% else %}svg{% endif %}"/></a>
 {% endfor %}
 {% if paginator.next_page %}
 <a id="next" href="{{site.baseurl}}{{paginator.next_page_path}}">›</a>
