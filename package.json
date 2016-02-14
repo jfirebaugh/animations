@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "node build.js",
-    "publish": "git subtree push --prefix build origin gh-pages"
+    "publish": "git push origin master && git subtree push --prefix build origin gh-pages"
   },
   "repository": {
     "type": "git",
