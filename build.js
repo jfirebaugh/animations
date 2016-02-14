@@ -27,11 +27,11 @@ Metalsmith(__dirname)
   }))
   .use(function (files, metalsmith, done) {
     Object.keys(files).forEach(function (name) {
-      if (/\.frag$/.test(name)) {
+      if (/\.glsl$/.test(name)) {
         var data = files[name];
         data.layout = 'glsl.html';
         delete files[name];
-        files[name.replace(/\.frag$/, '.html')] = data;
+        files[name.replace(/\.glsl$/, '.html')] = data;
       }
     });
     done();
