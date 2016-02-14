@@ -5,7 +5,8 @@
   "main": "index.html",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "node build.js"
+    "build": "node build.js",
+    "publish": "git subtree push --prefix build origin gh-pages"
   },
   "repository": {
     "type": "git",
