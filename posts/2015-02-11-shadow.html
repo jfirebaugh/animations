@@ -1,0 +1,39 @@
+<script>
+var width = 500,
+    height = 500,
+    n = 5;
+
+var svg = d3.select("body").append("svg")
+    .attr("width", width)
+    .attr("height", height)
+    .style("background", "#d1d1d1");
+
+var gradients = svg.selectAll("linearGradient")
+    .data(d3.range(4))
+    .enter().append("linearGradient")
+    .attr("id", function(d) { return "gradient" + d; });
+
+gradients.append("stop")
+    .attr("offset", 0)
+    .attr("stop-color", "rgba(0,0,0,0)");
+
+gradients.append("stop")
+    .attr("offset", 100)
+    .attr("stop-color", "rgba(0,0,0,1)");
+
+var squares = svg.selectAll("rect")
+    .data([[0, 0], [width / 2, 0], [width / 2, height / 2], [0, height / 2]])
+    .enter().append("rect")
+    .attr("x", function(d) { return d[0]; })
+    .attr("y", function(d) { return d[1]; })
+    .attr("width", width / 2)
+    .attr("height", height / 2)
+    .attr("fill", function(d, i) { return "url(#gradient" + i + ")"; });
+
+d3.timer(function(t) {
+    gradients.attr("gradientTransform", function(d, i) {
+        return "rotate(" + (90 * i + 360 * (t % 20000 / 20000)) + ",0.5,0.5)";
+    })
+});
+
+</script>

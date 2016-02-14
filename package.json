@@ -1,0 +1,33 @@
+{
+  "name": "animations",
+  "version": "1.0.0",
+  "description": "d3 or WebGL animations, one each day",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "node build.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jfirebaugh/animations.git"
+  },
+  "author": "John Firebaugh <john.firebaugh@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jfirebaugh/animations/issues"
+  },
+  "homepage": "https://github.com/jfirebaugh/animations#readme",
+  "private": true,
+  "devDependencies": {
+    "diy-handlebars-helpers": "^1.0.10",
+    "handlebars": "^4.0.5",
+    "metalsmith": "^2.1.0",
+    "metalsmith-assets": "^0.1.0",
+    "metalsmith-collections": "^0.7.0",
+    "metalsmith-date-in-filename": "0.0.14",
+    "metalsmith-layouts": "^1.4.4",
+    "metalsmith-pagination": "^1.4.0",
+    "metalsmith-paths": "^2.1.1",
+    "metalsmith-permalinks": "^0.4.1"
+  }
+}

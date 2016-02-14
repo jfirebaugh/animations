@@ -1,0 +1,38 @@
+<script src="../perlin.js"></script>
+<script>
+var width = 500,
+    height = 500,
+    n = 10;
+
+noise.seed(Math.random());
+
+var svg = d3.select("body").append("svg")
+    .attr("width", width)
+    .attr("height", height)
+    .style("background", "#111");
+
+var data = d3.range(0, n * n)
+    .map(function(d, i) {
+        var x = d % n,
+            y = ~~(d / n);
+        return { x: x, y: y, i: i };
+    });
+
+var squares = svg.selectAll("g")
+    .data(data)
+    .enter().append("g");
+
+squares.append("rect")
+    .attr("fill", "#d1d1d1")
+    .attr("fill-opacity", 0.7)
+    .attr("width", width / n)
+    .attr("height", height / n);
+
+d3.timer(function(t) {
+    squares.attr("transform", function(d) {
+        var r = 360 * noise.perlin3(d.x, d.y, t / 10000);
+        return "translate(" + [d.x * width / n, d.y * height / n] + ")rotate(" + [r, width / n / 2, height / n / 2] + ")";
+    });
+});
+
+</script>
