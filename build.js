@@ -7,6 +7,7 @@ var permalinks = require('metalsmith-permalinks');
 var layouts = require('metalsmith-layouts');
 var pagination = require('metalsmith-pagination');
 var assets = require('metalsmith-assets');
+var browserify = require('metalsmith-browserify');
 
 Handlebars.registerHelper('each-reverse', require('diy-handlebars-helpers/lib/each-reverse'));
 
@@ -57,6 +58,7 @@ Metalsmith(__dirname)
     source: 'assets',
     destination: '.'
   }))
+  .use(browserify('glsl.js', ['src/glsl.js']))
   .build(function (err) {
     if (err) throw err;
   });

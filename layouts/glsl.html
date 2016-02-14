@@ -2,7 +2,6 @@
 <meta charset="utf-8">
 <title>{{path}}</title>
 <body>
-<script type="text/javascript" src="https://rawgit.com/patriciogonzalezvivo/glslCanvas/master/build/GlslCanvas.min.js"></script>
 <style>
 html, body {
     height: 100%;
@@ -86,17 +85,11 @@ a {
 <a id="prev" href="{{baseurl}}/{{previous.path}}/">‹</a>
 {{/if}}
 
-<script type="glsl-fragment-shader" id="glslShader">
+<script type="glsl-fragment-shader">
 {{{contents}}}
 </script>
-<canvas id="glslCanvas" width="500" height="500"></canvas>
-<script>
-var shader = document.getElementById("glslShader");
-var dom = document.getElementById("glslCanvas");
-var sandbox = new GlslCanvas(dom);
-sandbox.load(shader.textContent);
-sandbox.render();
-</script>
+<canvas width="500" height="500"></canvas>
+<script type="text/javascript" src="{{baseurl}}/glsl.js"></script>
 
 {{# if next}}
 <a id="next" href="{{baseurl}}/{{next.path}}/">›</a>

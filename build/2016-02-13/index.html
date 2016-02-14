@@ -2,7 +2,6 @@
 <meta charset="utf-8">
 <title>2016-02-13</title>
 <body>
-<script type="text/javascript" src="https://rawgit.com/patriciogonzalezvivo/glslCanvas/master/build/GlslCanvas.min.js"></script>
 <style>
 html, body {
     height: 100%;
@@ -84,7 +83,7 @@ a {
 
 <a id="prev" href="/animations/2015-04-06/">‹</a>
 
-<script type="glsl-fragment-shader" id="glslShader">
+<script type="glsl-fragment-shader">
 #ifdef GL_ES
 precision mediump float;
 #endif
@@ -112,14 +111,8 @@ void main() {
 }
 
 </script>
-<canvas id="glslCanvas" width="500" height="500"></canvas>
-<script>
-var shader = document.getElementById("glslShader");
-var dom = document.getElementById("glslCanvas");
-var sandbox = new GlslCanvas(dom);
-sandbox.load(shader.textContent);
-sandbox.render();
-</script>
+<canvas width="500" height="500"></canvas>
+<script type="text/javascript" src="/animations/glsl.js"></script>
 
 
 <footer>
