@@ -3,3 +3,4 @@ baseurl: "/animations"
 permalink: /:year-:month-:day/
 paginate: 100
 paginate_path: ":num"
+include: [.nojekyll]
