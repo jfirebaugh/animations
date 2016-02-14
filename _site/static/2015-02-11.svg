@@ -1,0 +1,13 @@
+<?xml version="1.0" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg width="500" height="500" style="background: rgb(209, 209, 209);" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><defs xmlns="http://www.w3.org/1999/xhtml"><style type="text/css"><![CDATA[
+html, body { height: 100%; margin: 0px; background: rgb(34, 34, 34); }
+body, #prev, #next { height: 100%; box-sizing: border-box; display: -webkit-flex; flex-direction: column; justify-content: center; }
+#prev, #next { position: absolute; top: 0px; color: rgb(209, 209, 209); font-size: 70px; text-decoration: none; padding: 20px; }
+#prev { left: 0px; }
+#next { right: 0px; }
+svg { margin: auto; }
+.fa { display: inline-block; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; line-height: 1; font-family: FontAwesome; font-size: inherit; text-rendering: auto; -webkit-font-smoothing: antialiased; }
+.fa-twitter::before { content: ''; }
+.fa-github::before { content: ''; }
+.fa-th::before { content: ''; }
+footer { text-align: center; margin-bottom: 25px; }
+a { color: rgb(209, 209, 209); text-decoration: none; padding: 10px; }]]></style></defs><linearGradient id="gradient0" gradientTransform="rotate(319.644,0.5,0.5)"><stop offset="0" stop-color="rgba(0,0,0,0)"/><stop offset="100" stop-color="rgba(0,0,0,1)"/></linearGradient><linearGradient id="gradient1" gradientTransform="rotate(409.644,0.5,0.5)"><stop offset="0" stop-color="rgba(0,0,0,0)"/><stop offset="100" stop-color="rgba(0,0,0,1)"/></linearGradient><linearGradient id="gradient2" gradientTransform="rotate(499.644,0.5,0.5)"><stop offset="0" stop-color="rgba(0,0,0,0)"/><stop offset="100" stop-color="rgba(0,0,0,1)"/></linearGradient><linearGradient id="gradient3" gradientTransform="rotate(589.644,0.5,0.5)"><stop offset="0" stop-color="rgba(0,0,0,0)"/><stop offset="100" stop-color="rgba(0,0,0,1)"/></linearGradient><rect x="0" y="0" width="250" height="250" fill="url(#gradient0)"/><rect x="250" y="0" width="250" height="250" fill="url(#gradient1)"/><rect x="250" y="250" width="250" height="250" fill="url(#gradient2)"/><rect x="0" y="250" width="250" height="250" fill="url(#gradient3)"/></svg>
