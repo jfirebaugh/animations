@@ -90,9 +90,8 @@ precision mediump float;
 
 #define PI 3.14159265359
 
-uniform vec2 u_resolution;
-uniform vec2 u_mouse;
-uniform float u_time;
+uniform vec3 iResolution;
+uniform float iGlobalTime;
 
 float plot(vec2 st, float pct){
   return  smoothstep( pct-0.01, pct, st.y) -
@@ -100,12 +99,12 @@ float plot(vec2 st, float pct){
 }
 
 void main() {
-    vec2 st = gl_FragCoord.xy/u_resolution;
+    vec2 st = gl_FragCoord.xy/iResolution.xy;
 
-    float y = 0.5 + 0.5 * sin(u_time * 0.2 + (u_time * 0.001 + 10000.0) * st.x);
+    float y = 0.5 + 0.5 * sin(iGlobalTime * 0.2 + (iGlobalTime * 0.001 + 10000.0) * st.x);
     vec3 color = vec3(y);
 
-    color = plot(st,y) * vec3(st.x, st.y, abs(sin(u_time * 0.3)));
+    color = plot(st,y) * vec3(st.x, st.y, abs(sin(iGlobalTime * 0.3)));
 
     gl_FragColor = vec4(color,1.0);
 }
