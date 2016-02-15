@@ -12,8 +12,8 @@ const vert  = `
   }
 `
 
-const canvas = window.querySelector('canvas')[0]
-const frag   = window.querySelector('script[type="glsl-fragment-shader"]').textContent
+const canvas = document.querySelector('canvas')
+const frag   = document.querySelector('script[type="glsl-fragment-shader"]').textContent
 const gl     = Context(canvas, render)
 const shader = Shader(gl, vert, frag)
 

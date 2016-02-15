@@ -7189,8 +7189,8 @@ var now = require('right-now');
 var start = now();
 var vert = '\n  precision mediump float;\n  attribute vec2 position;\n  void main() {\n    gl_Position = vec4(position, 1, 1);\n  }\n';
 
-var canvas = window.querySelector('canvas')[0];
-var frag = window.querySelector('script[type="glsl-fragment-shader"]').textContent;
+var canvas = document.querySelector('canvas');
+var frag = document.querySelector('script[type="glsl-fragment-shader"]').textContent;
 var gl = Context(canvas, render);
 var shader = Shader(gl, vert, frag);
 
