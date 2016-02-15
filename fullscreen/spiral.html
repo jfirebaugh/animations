@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<body>
+<script src="../d3.v3.min.js"></script>
+<style>
+    html, body {
+        height: 100%;
+        background: #222;
+        margin: 0;
+    }
+</style>
+<script>
+var body = d3.select("body"),
+    width = body.property("offsetWidth"),
+    height = body.property("offsetHeight"),
+    a = 1,
+    b = 0.3;
+
+var svg = d3.select("body").append("svg")
+    .attr("width", width)
+    .attr("height", height)
+    .style("background", "#111")
+    .append("g")
+    .attr("transform", "translate(" + [width / 2, height / 2] + ")");
+
+var spiral = svg.selectAll("g")
+    .data(d3.range(5))
+    .enter().append("g");
+
+var r1 = d3.range(0, 10 * Math.PI, 0.1),
+    r2 = r1.slice().reverse();
+
+spiral.append("path")
+    .attr("fill", "#fff")
+    .attr("fill-opacity", 0.2)
+    .attr("d", function(d, i) {
+        return "M" +
+            r1.map(function(θ) {
+                var r = a * Math.exp(b * θ);
+                return [
+                    r * Math.cos(θ),
+                    r * Math.sin(θ)
+                ];
+            }).join("L")
+            + "M" +
+            r2.map(function(θ) {
+                var r = a * Math.exp(b * θ);
+                return [
+                    r * Math.cos(θ + Math.PI),
+                    r * Math.sin(θ + Math.PI)
+                ];
+            }).join("L") + "Z";
+    });
+
+d3.timer(function(t) {
+    spiral.attr("transform", function(d, i) {
+        return "rotate(" + [(d * t / 100) % 360] + ")"
+    });
+});
+</script>

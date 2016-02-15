@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<title>2015-01-02</title>
+<body>
+<script src="/animations/d3.v3.min.js"></script>
+<style>
+html, body {
+    height: 100%;
+    background: #222;
+    margin: 0;
+}
+
+body, #prev, #next {
+    height: 100%;
+    box-sizing: border-box;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    display: -webkit-flex;
+    -webkit-flex-direction: column;
+    -webkit-justify-content: center;
+}
+
+#prev, #next {
+    position: absolute;
+    top: 0;
+    color: #d1d1d1;
+    font-size: 70px;
+    text-decoration: none;
+    padding: 20px;
+}
+
+#prev {
+    left: 0;
+}
+
+#next {
+    right: 0;
+}
+
+svg {
+    margin: auto;
+}
+
+@font-face {
+    font-family: 'FontAwesome';
+    src: url('/animations/fonts/fontawesome-webfont.eot?v=4.2.0');
+    src: url('/animations/fonts/fontawesome-webfont.eot?#iefix&v=4.2.0') format('embedded-opentype'), url('/animations/fonts/fontawesome-webfont.woff?v=4.2.0') format('woff'), url('/animations/fonts/fontawesome-webfont.ttf?v=4.2.0') format('truetype'), url('/animations/fonts/fontawesome-webfont.svg?v=4.2.0#fontawesomeregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+.fa {
+    display: inline-block;
+    font: normal normal normal 14px/1 FontAwesome;
+    font-size: inherit;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+.fa-twitter:before {
+    content: "\f099";
+}
+.fa-github:before {
+    content: "\f09b";
+}
+.fa-th:before {
+    content: "\f00a";
+}
+
+footer {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+a {
+    color: #d1d1d1;
+    text-decoration: none;
+    padding: 10px;
+}
+
+</style>
+
+<a id="prev" href="/animations/2015-01-01/">‹</a>
+
+<script>
+var width = 500,
+    height = 500,
+    cols = 50,
+    theta = -25 * Math.PI / 180,
+    length = 8.5,
+    x0 = width/2.8,
+    y0 = height,
+    t0 = Math.PI / 2;
+
+function tree(string) {
+    var stack = [],
+        root = { path: "M" + x0 + "," + y0, children: [] },
+        state = { x: x0, y: y0, t: t0, branch: root };
+
+    var commands = {
+        'F': function() {
+            state.x -= length * Math.cos(state.t);
+            state.y -= length * Math.sin(state.t);
+            state.branch.path += "L" + state.x + "," + state.y;
+        },
+        '+': function() {
+            state.t += theta;
+        },
+        '-': function() {
+            state.t -= theta;
+        },
+        '[': function() {
+            stack.push(state);
+            state = Object.create(state);
+            var branch = { path: "M" + state.x + "," + state.y, children: [] };
+            state.branch.children.push(branch);
+            state.branch = branch;
+        },
+        ']': function() {
+            state = stack.pop();
+        }
+    };
+
+    string.split('').forEach(function(c) { commands[c](); });
+    return root;
+}
+
+var svg = d3.select("body").append("svg")
+    .attr("width", width)
+    .attr("height", height)
+    .style("background", "#d1d1d1")
+    .datum(tree(l(4, {"F": "FF-[-F+F+F]+[+F-F-F]"}, "F")))
+    .each(grow);
+
+function grow(d) {
+    d3.select(this).append("path")
+        .attr("stroke", "black")
+        .attr("stroke-opacity", 0.65)
+        .attr("stroke-width", 3)
+        .attr("fill", "none")
+        .attr("d", function(d) { return d.path; })
+        .each(function() { d3.select(this).attr("stroke-dasharray", "0," + this.getTotalLength()); })
+      .transition()
+        .duration(1000)
+        .attrTween("stroke-dasharray", tweenDash)
+
+    d3.select(this).selectAll("g")
+        .data(d.children)
+        .enter().append("g")
+      .transition()
+        .delay(function(d, i) { return 200 + i * 200; })
+        .each("start", grow);
+}
+
+function l(n, rules, str) {
+    return n === 0 ? str : l(--n, rules, str.replace(/./g, function(c) { return rules[c] || c; }));
+}
+
+// http://bl.ocks.org/mbostock/5649592
+function tweenDash() {
+  var l = this.getTotalLength(),
+      i = d3.interpolateString("0," + l, l + "," + l);
+  return function(t) { return i(t); };
+}
+</script>
+
+
+<a id="next" href="/animations/2015-01-03/">›</a>
+
+<footer>
+    <a href="/animations/"><i class="fa fa-th"></i></a>
+    <a href="https://twitter.com/jfire"><i class="fa fa-twitter"></i></a>
+    <a href="https://github.com/jfirebaugh/animations/blob/master/posts/2015-01-02-plant.html"><i class="fa fa-github"></i></a>
+</footer>
+<script>
+  document.addEventListener('DOMContentLoaded', function(event) {
+    window.addEventListener('keyup', function(evt) {
+      if (evt.keyCode === 39) {
+        var nextEl = document.getElementById('next');
+        if (nextEl) {
+          nextEl.click();
+        }
+      } else if (evt.keyCode === 37) {
+        var prevEl = document.getElementById('prev');
+        if (prevEl) {
+          prevEl.click();
+        }
+      }
+    });
+  });
+</script>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-29668835-1', 'auto');
+  ga('send', 'pageview');
+
+</script>

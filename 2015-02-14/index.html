@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<title>2015-02-14</title>
+<body>
+<script src="/animations/d3.v3.min.js"></script>
+<style>
+html, body {
+    height: 100%;
+    background: #222;
+    margin: 0;
+}
+
+body, #prev, #next {
+    height: 100%;
+    box-sizing: border-box;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    display: -webkit-flex;
+    -webkit-flex-direction: column;
+    -webkit-justify-content: center;
+}
+
+#prev, #next {
+    position: absolute;
+    top: 0;
+    color: #d1d1d1;
+    font-size: 70px;
+    text-decoration: none;
+    padding: 20px;
+}
+
+#prev {
+    left: 0;
+}
+
+#next {
+    right: 0;
+}
+
+svg {
+    margin: auto;
+}
+
+@font-face {
+    font-family: 'FontAwesome';
+    src: url('/animations/fonts/fontawesome-webfont.eot?v=4.2.0');
+    src: url('/animations/fonts/fontawesome-webfont.eot?#iefix&v=4.2.0') format('embedded-opentype'), url('/animations/fonts/fontawesome-webfont.woff?v=4.2.0') format('woff'), url('/animations/fonts/fontawesome-webfont.ttf?v=4.2.0') format('truetype'), url('/animations/fonts/fontawesome-webfont.svg?v=4.2.0#fontawesomeregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+.fa {
+    display: inline-block;
+    font: normal normal normal 14px/1 FontAwesome;
+    font-size: inherit;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+.fa-twitter:before {
+    content: "\f099";
+}
+.fa-github:before {
+    content: "\f09b";
+}
+.fa-th:before {
+    content: "\f00a";
+}
+
+footer {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+a {
+    color: #d1d1d1;
+    text-decoration: none;
+    padding: 10px;
+}
+
+</style>
+
+<a id="prev" href="/animations/2015-02-11/">‹</a>
+
+<script>
+var width = 500,
+    height = 500;
+
+var svg = d3.select("body").append("svg")
+    .attr("width", width)
+    .attr("height", height)
+    .style("background", "#d1d1d1")
+    .append("g")
+    .attr("transform", "translate(" + [width / 2, height / 2] + ")");
+
+var spiral = svg.append("path")
+    .attr("fill", "none")
+    .attr("stroke", "#111")
+    .attr("stroke-opacity", 1)
+    .attr("stroke-width", 0.5);
+
+// Equation from http://goatlink.deviantart.com/art/lissajous-curves-338721857
+
+var range = d3.range(-40 * Math.PI, 40 * Math.PI, 0.02);
+
+d3.timer(function(t) {
+    var d = "M";
+
+    for (var i = 0; i < range.length; i++) {
+        var p = range[i];
+        d += 0.18 * width * (Math.sin(4.01 * p + t / 2000) + Math.sin(3 * p + t / 2000));
+        d += ",";
+        d += 0.18 * height * (Math.sin(2.005 * p + t / 4000) + Math.sin(1.01 * p + t / 2000));
+        if (i != range.length - 1) d += "L";
+    }
+
+    d.length--;
+    spiral.attr("d", d);
+
+    svg.attr("transform", "translate(250,250)rotate(" + 360 * (t % 100000 / 100000) + ")")
+})
+</script>
+
+
+<a id="next" href="/animations/2015-02-15/">›</a>
+
+<footer>
+    <a href="/animations/"><i class="fa fa-th"></i></a>
+    <a href="https://twitter.com/jfire"><i class="fa fa-twitter"></i></a>
+    <a href="https://github.com/jfirebaugh/animations/blob/master/posts/2015-02-14-lissajous.html"><i class="fa fa-github"></i></a>
+</footer>
+<script>
+  document.addEventListener('DOMContentLoaded', function(event) {
+    window.addEventListener('keyup', function(evt) {
+      if (evt.keyCode === 39) {
+        var nextEl = document.getElementById('next');
+        if (nextEl) {
+          nextEl.click();
+        }
+      } else if (evt.keyCode === 37) {
+        var prevEl = document.getElementById('prev');
+        if (prevEl) {
+          prevEl.click();
+        }
+      }
+    });
+  });
+</script>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-29668835-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
