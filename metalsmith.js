@@ -11,8 +11,9 @@ var browserify = require('metalsmith-browserify');
 
 Handlebars.registerHelper('each-reverse', require('diy-handlebars-helpers/lib/each-reverse'));
 
-Metalsmith(__dirname)
+module.exports = Metalsmith(__dirname)
   .source('posts')
+  .destination('animations')
   .metadata({
     title: 'Animations',
     baseurl: '/animations'
@@ -58,7 +59,25 @@ Metalsmith(__dirname)
     source: 'assets',
     destination: '.'
   }))
-  .use(browserify('glsl.js', ['src/glsl.js']))
-  .build(function (err) {
-    if (err) throw err;
-  });
+  .use(browserify('glsl.js', ['src/glsl.js']));
+
+if (process.argv[2] === 'serve') {
+  var serve = require('metalsmith-serve');
+  var watch = require('metalsmith-watch');
+
+  module.exports
+    .use(watch({
+      paths: {
+        '${source}/**/*': true,
+        'src/glsl.js': '**/*'
+      }
+    }))
+    .use(serve({
+      document_root: '.',
+      port: process.env.PORT
+    }));
+}
+
+module.exports.build(function (err) {
+  if (err) throw err;
+});

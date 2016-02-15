@@ -5,8 +5,9 @@
   "main": "index.html",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "node build.js",
-    "publish": "git push origin master && git subtree push --prefix build origin gh-pages"
+    "start": "node metalsmith.js serve",
+    "build": "node metalsmith.js",
+    "publish": "git push origin master && git subtree push --prefix animations origin gh-pages"
   },
   "repository": {
     "type": "git",
@@ -37,6 +38,8 @@
     "metalsmith-pagination": "^1.4.0",
     "metalsmith-paths": "^2.1.1",
     "metalsmith-permalinks": "^0.4.1",
+    "metalsmith-serve": "0.0.7",
+    "metalsmith-watch": "^1.0.1",
     "right-now": "^1.0.0"
   },
   "browserify": {
