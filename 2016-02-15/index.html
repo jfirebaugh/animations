@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <meta charset="utf-8">
-<title>2016-02-13</title>
+<title>2016-02-15</title>
 <body>
 <style>
 html, body {
@@ -81,44 +81,49 @@ a {
 
 </style>
 
-<a id="prev" href="/animations/2015-04-06/">‹</a>
+<a id="prev" href="/animations/2016-02-13/">‹</a>
 
 <script type="glsl-fragment-shader">
-#ifdef GL_ES
 precision mediump float;
-#endif
 
-#define PI 3.14159265359
-
-uniform vec3 iResolution;
 uniform float iGlobalTime;
-
-float plot(vec2 st, float pct){
-  return  smoothstep( pct-0.01, pct, st.y) -
-          smoothstep( pct, pct+0.2, st.y);
-}
+uniform vec3  iResolution;
 
 void main() {
-    vec2 st = gl_FragCoord.xy/iResolution.xy;
+  vec2 st = gl_FragCoord.xy / iResolution.xy - vec2(0.5);
 
-    float y = 0.5 + 0.5 * sin(iGlobalTime * 0.2 + (iGlobalTime * 0.001 + 10000.0) * st.x);
-    vec3 color = vec3(y);
+  float tr = iGlobalTime / 2.0;
+  float tg = tr + 8.0;
+  float tb = tg + 10.0;
 
-    color = plot(st,y) * vec3(st.x, st.y, abs(sin(iGlobalTime * 0.3)));
+  float kx = 3.0;
+  float ky = 2.0;
 
-    gl_FragColor = vec4(color,1.0);
+  float a = 0.8;
+  float b = 0.8;
+
+  vec2 str = vec2(a * cos(kx * tr),
+                  b * sin(ky * tr));
+  vec2 stg = vec2(a * cos(kx * tg),
+                  b * sin(ky * tg));
+  vec2 stb = vec2(a * cos(kx * tb),
+                  b * sin(ky * tb));
+
+  gl_FragColor.r = 1.0 - distance(str, st);
+  gl_FragColor.g = 1.0 - distance(stg, st);
+  gl_FragColor.b = 1.0 - distance(stb, st);
+  gl_FragColor.a = 0.8;
 }
 
 </script>
 <canvas width="500" height="500"></canvas>
 <script type="text/javascript" src="/animations/glsl.js"></script>
 
-<a id="next" href="/animations/2016-02-15/">›</a>
 
 <footer>
     <a href="/animations/"><i class="fa fa-th"></i></a>
     <a href="https://twitter.com/jfire"><i class="fa fa-twitter"></i></a>
-    <a href="https://github.com/jfirebaugh/animations/blob/master/posts/2016-02-13.glsl"><i class="fa fa-github"></i></a>
+    <a href="https://github.com/jfirebaugh/animations/blob/master/posts/2016-02-15.glsl"><i class="fa fa-github"></i></a>
 </footer>
 <script>
   document.addEventListener('DOMContentLoaded', function(event) {
