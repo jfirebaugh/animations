@@ -6,6 +6,8 @@ I use metalsmith-browserify to generate a static site JavaScript bundle for the 
 
 I use metalsmith-serve and metalsmith-watch for local development. I use the directory `animations` as the build destination, then serve the root of the project, so that paths start with `/animations` like in production.
 
+I use [this trick](https://gist.github.com/cobyism/4730490) for pushing the `animations` subtree to the gh-pages branch, and thus publishing to GitHub pages.
+
 This is my first time using metalsmith. Here are some pros and cons as I see them.
 
 Pros:
