@@ -26,7 +26,6 @@
     "babelify": "^7.2.0",
     "browserify": "^13.0.0",
     "diy-handlebars-helpers": "^1.0.10",
-    "gl-context": "^0.1.1",
     "gl-shader": "^4.2.0",
     "handlebars": "^4.0.5",
     "metalsmith": "^2.1.0",
