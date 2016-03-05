@@ -28,7 +28,7 @@ function createABigTriangle(gl) {
 
 module.exports = createABigTriangle
 
-},{"gl-buffer":13,"gl-vao":28,"weak-map":46}],2:[function(require,module,exports){
+},{"gl-buffer":13,"gl-vao":27,"weak-map":44}],2:[function(require,module,exports){
 var padLeft = require('pad-left')
 
 module.exports = addLineNumbers
@@ -46,7 +46,7 @@ function addLineNumbers (string, start, delim) {
   }).join('\n')
 }
 
-},{"pad-left":40}],3:[function(require,module,exports){
+},{"pad-left":39}],3:[function(require,module,exports){
 module.exports = function _atob(str) {
   return atob(str)
 }
@@ -1848,7 +1848,7 @@ function blitBuffer (src, dst, offset, length) {
 }
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"base64-js":4,"ieee754":35,"isarray":7}],7:[function(require,module,exports){
+},{"base64-js":4,"ieee754":34,"isarray":7}],7:[function(require,module,exports){
 var toString = {}.toString;
 
 module.exports = Array.isArray || function (arr) {
@@ -2673,7 +2673,7 @@ function createBuffer(gl, data, type, usage) {
 
 module.exports = createBuffer
 
-},{"ndarray":39,"ndarray-ops":38,"typedarray-pool":45}],14:[function(require,module,exports){
+},{"ndarray":38,"ndarray-ops":37,"typedarray-pool":43}],14:[function(require,module,exports){
 module.exports = {
   0: 'NONE',
   1: 'ONE',
@@ -2981,39 +2981,6 @@ module.exports = function lookupConstant (number) {
 }
 
 },{"./1.0/numbers":14}],16:[function(require,module,exports){
-var raf = require('raf-component')
-
-module.exports = createContext
-
-function createContext(canvas, opts, render) {
-  if (typeof opts === 'function') {
-    render = opts
-    opts = {}
-  } else {
-    opts = opts || {}
-  }
-
-  var gl = (
-    canvas.getContext('webgl', opts) ||
-    canvas.getContext('webgl-experimental', opts) ||
-    canvas.getContext('experimental-webgl', opts)
-  )
-
-  if (!gl) {
-    throw new Error('Unable to initialize WebGL')
-  }
-
-  if (render) raf(tick)
-
-  return gl
-
-  function tick() {
-    render(gl)
-    raf(tick)
-  }
-}
-
-},{"raf-component":41}],17:[function(require,module,exports){
 
 var sprintf = require('sprintf-js').sprintf;
 var glConstants = require('gl-constants/lookup');
@@ -3068,7 +3035,7 @@ function formatCompilerError(errLog, src, type) {
 }
 
 
-},{"add-line-numbers":2,"gl-constants/lookup":15,"glsl-shader-name":29,"sprintf-js":44}],18:[function(require,module,exports){
+},{"add-line-numbers":2,"gl-constants/lookup":15,"glsl-shader-name":28,"sprintf-js":42}],17:[function(require,module,exports){
 'use strict'
 
 var createUniformWrapper   = require('./lib/create-uniforms')
@@ -3304,7 +3271,7 @@ function createShader(
 
 module.exports = createShader
 
-},{"./lib/GLError":19,"./lib/create-attributes":20,"./lib/create-uniforms":21,"./lib/reflect":22,"./lib/runtime-reflect":23,"./lib/shader-cache":24}],19:[function(require,module,exports){
+},{"./lib/GLError":18,"./lib/create-attributes":19,"./lib/create-uniforms":20,"./lib/reflect":21,"./lib/runtime-reflect":22,"./lib/shader-cache":23}],18:[function(require,module,exports){
 function GLError (rawError, shortMessage, longMessage) {
     this.shortMessage = shortMessage || ''
     this.longMessage = longMessage || ''
@@ -3319,7 +3286,7 @@ GLError.prototype.name = 'GLError'
 GLError.prototype.constructor = GLError
 module.exports = GLError
 
-},{}],20:[function(require,module,exports){
+},{}],19:[function(require,module,exports){
 'use strict'
 
 module.exports = createAttributeWrapper
@@ -3584,7 +3551,7 @@ function createAttributeWrapper(
   return obj
 }
 
-},{"./GLError":19}],21:[function(require,module,exports){
+},{"./GLError":18}],20:[function(require,module,exports){
 'use strict'
 
 var coallesceUniforms = require('./reflect')
@@ -3777,7 +3744,7 @@ function createUniformWrapper(gl, wrapper, uniforms, locations) {
   }
 }
 
-},{"./GLError":19,"./reflect":22}],22:[function(require,module,exports){
+},{"./GLError":18,"./reflect":21}],21:[function(require,module,exports){
 'use strict'
 
 module.exports = makeReflectTypes
@@ -3835,7 +3802,7 @@ function makeReflectTypes(uniforms, useIndex) {
   }
   return obj
 }
-},{}],23:[function(require,module,exports){
+},{}],22:[function(require,module,exports){
 'use strict'
 
 exports.uniforms    = runtimeUniforms
@@ -3915,7 +3882,7 @@ function runtimeAttributes(gl, program) {
   return result
 }
 
-},{}],24:[function(require,module,exports){
+},{}],23:[function(require,module,exports){
 'use strict'
 
 exports.shader   = getShaderReference
@@ -4053,7 +4020,7 @@ function createProgram(gl, vref, fref, attribs, locations) {
   return getCache(gl).getProgram(vref, fref, attribs, locations)
 }
 
-},{"./GLError":19,"gl-format-compiler-error":17,"weakmap-shim":49}],25:[function(require,module,exports){
+},{"./GLError":18,"gl-format-compiler-error":16,"weakmap-shim":47}],24:[function(require,module,exports){
 "use strict"
 
 function doBind(gl, elements, attributes) {
@@ -4108,7 +4075,7 @@ function doBind(gl, elements, attributes) {
 }
 
 module.exports = doBind
-},{}],26:[function(require,module,exports){
+},{}],25:[function(require,module,exports){
 "use strict"
 
 var bindAttribs = require("./do-bind.js")
@@ -4148,7 +4115,7 @@ function createVAOEmulated(gl) {
 }
 
 module.exports = createVAOEmulated
-},{"./do-bind.js":25}],27:[function(require,module,exports){
+},{"./do-bind.js":24}],26:[function(require,module,exports){
 "use strict"
 
 var bindAttribs = require("./do-bind.js")
@@ -4236,7 +4203,7 @@ function createVAONative(gl, ext) {
 }
 
 module.exports = createVAONative
-},{"./do-bind.js":25}],28:[function(require,module,exports){
+},{"./do-bind.js":24}],27:[function(require,module,exports){
 "use strict"
 
 var createVAONative = require("./lib/vao-native.js")
@@ -4256,7 +4223,7 @@ function createVAO(gl, attributes, elements, elementsType) {
 
 module.exports = createVAO
 
-},{"./lib/vao-emulated.js":26,"./lib/vao-native.js":27}],29:[function(require,module,exports){
+},{"./lib/vao-emulated.js":25,"./lib/vao-native.js":26}],28:[function(require,module,exports){
 var tokenize = require('glsl-tokenizer')
 var atob     = require('atob-lite')
 
@@ -4281,7 +4248,7 @@ function getName(src) {
   }
 }
 
-},{"atob-lite":3,"glsl-tokenizer":34}],30:[function(require,module,exports){
+},{"atob-lite":3,"glsl-tokenizer":33}],29:[function(require,module,exports){
 module.exports = tokenize
 
 var literals = require('./lib/literals')
@@ -4628,7 +4595,7 @@ function tokenize() {
   }
 }
 
-},{"./lib/builtins":31,"./lib/literals":32,"./lib/operators":33}],31:[function(require,module,exports){
+},{"./lib/builtins":30,"./lib/literals":31,"./lib/operators":32}],30:[function(require,module,exports){
 module.exports = [
     'gl_Position'
   , 'gl_PointSize'
@@ -4776,7 +4743,7 @@ module.exports = [
   , 'dFdy'
 ]
 
-},{}],32:[function(require,module,exports){
+},{}],31:[function(require,module,exports){
 module.exports = [
   // current
     'precision'
@@ -4871,7 +4838,7 @@ module.exports = [
   , 'using'
 ]
 
-},{}],33:[function(require,module,exports){
+},{}],32:[function(require,module,exports){
 module.exports = [
     '<<='
   , '>>='
@@ -4920,7 +4887,7 @@ module.exports = [
   , '}'
 ]
 
-},{}],34:[function(require,module,exports){
+},{}],33:[function(require,module,exports){
 var tokenize = require('./index')
 
 module.exports = tokenizeString
@@ -4935,7 +4902,7 @@ function tokenizeString(str) {
   return tokens
 }
 
-},{"./index":30}],35:[function(require,module,exports){
+},{"./index":29}],34:[function(require,module,exports){
 exports.read = function (buffer, offset, isLE, mLen, nBytes) {
   var e, m
   var eLen = nBytes * 8 - mLen - 1
@@ -5021,7 +4988,7 @@ exports.write = function (buffer, value, offset, isLE, mLen, nBytes) {
   buffer[offset + i - d] |= s * 128
 }
 
-},{}],36:[function(require,module,exports){
+},{}],35:[function(require,module,exports){
 "use strict"
 
 function iota(n) {
@@ -5033,7 +5000,7 @@ function iota(n) {
 }
 
 module.exports = iota
-},{}],37:[function(require,module,exports){
+},{}],36:[function(require,module,exports){
 /**
  * Determine if an object is Buffer
  *
@@ -5052,7 +5019,7 @@ module.exports = function (obj) {
     ))
 }
 
-},{}],38:[function(require,module,exports){
+},{}],37:[function(require,module,exports){
 "use strict"
 
 var compile = require("cwise-compiler")
@@ -5515,7 +5482,7 @@ exports.equals = compile({
 
 
 
-},{"cwise-compiler":8}],39:[function(require,module,exports){
+},{"cwise-compiler":8}],38:[function(require,module,exports){
 var iota = require("iota-array")
 var isBuffer = require("is-buffer")
 
@@ -5860,7 +5827,7 @@ function wrappedNDArrayCtor(data, shape, stride, offset) {
 
 module.exports = wrappedNDArrayCtor
 
-},{"iota-array":36,"is-buffer":37}],40:[function(require,module,exports){
+},{"iota-array":35,"is-buffer":36}],39:[function(require,module,exports){
 /*!
  * pad-left <https://github.com/jonschlinkert/pad-left>
  *
@@ -5876,47 +5843,7 @@ module.exports = function padLeft(str, num, ch) {
   ch = typeof ch !== 'undefined' ? (ch + '') : ' ';
   return repeat(ch, num) + str;
 };
-},{"repeat-string":42}],41:[function(require,module,exports){
-/**
- * Expose `requestAnimationFrame()`.
- */
-
-exports = module.exports = window.requestAnimationFrame
-  || window.webkitRequestAnimationFrame
-  || window.mozRequestAnimationFrame
-  || window.oRequestAnimationFrame
-  || window.msRequestAnimationFrame
-  || fallback;
-
-/**
- * Fallback implementation.
- */
-
-var prev = new Date().getTime();
-function fallback(fn) {
-  var curr = new Date().getTime();
-  var ms = Math.max(0, 16 - (curr - prev));
-  var req = setTimeout(fn, ms);
-  prev = curr;
-  return req;
-}
-
-/**
- * Cancel.
- */
-
-var cancel = window.cancelAnimationFrame
-  || window.webkitCancelAnimationFrame
-  || window.mozCancelAnimationFrame
-  || window.oCancelAnimationFrame
-  || window.msCancelAnimationFrame
-  || window.clearTimeout;
-
-exports.cancel = function(id){
-  cancel.call(window, id);
-};
-
-},{}],42:[function(require,module,exports){
+},{"repeat-string":40}],40:[function(require,module,exports){
 /*!
  * repeat-string <https://github.com/jonschlinkert/repeat-string>
  *
@@ -5984,7 +5911,7 @@ function repeat(str, num) {
 var res = '';
 var cache;
 
-},{}],43:[function(require,module,exports){
+},{}],41:[function(require,module,exports){
 (function (global){
 module.exports =
   global.performance &&
@@ -5995,7 +5922,7 @@ module.exports =
   }
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],44:[function(require,module,exports){
+},{}],42:[function(require,module,exports){
 (function(window) {
     var re = {
         not_string: /[^s]/,
@@ -6205,7 +6132,7 @@ module.exports =
     }
 })(typeof window === "undefined" ? this : window);
 
-},{}],45:[function(require,module,exports){
+},{}],43:[function(require,module,exports){
 (function (global,Buffer){
 'use strict'
 
@@ -6422,7 +6349,7 @@ exports.clearCache = function clearCache() {
   }
 }
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer)
-},{"bit-twiddle":5,"buffer":6,"dup":12}],46:[function(require,module,exports){
+},{"bit-twiddle":5,"buffer":6,"dup":12}],44:[function(require,module,exports){
 // Copyright (C) 2011 Google Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -7109,7 +7036,7 @@ exports.clearCache = function clearCache() {
   }
 })();
 
-},{}],47:[function(require,module,exports){
+},{}],45:[function(require,module,exports){
 var hiddenStore = require('./hidden-store.js');
 
 module.exports = createStore;
@@ -7130,7 +7057,7 @@ function createStore() {
     };
 }
 
-},{"./hidden-store.js":48}],48:[function(require,module,exports){
+},{"./hidden-store.js":46}],46:[function(require,module,exports){
 module.exports = hiddenStore;
 
 function hiddenStore(obj, key) {
@@ -7148,7 +7075,7 @@ function hiddenStore(obj, key) {
     return store;
 }
 
-},{}],49:[function(require,module,exports){
+},{}],47:[function(require,module,exports){
 // Original - @Gozola. 
 // https://gist.github.com/Gozala/1269991
 // This is a reimplemented version (with a few bug fixes).
@@ -7178,32 +7105,45 @@ function weakMap() {
     }
 }
 
-},{"./create-store.js":47}],50:[function(require,module,exports){
+},{"./create-store.js":45}],48:[function(require,module,exports){
 'use strict';
 
-var Context = require('gl-context');
-var triangle = require('a-big-triangle');
-var Shader = require('gl-shader');
 var now = require('right-now');
-
-var start = now();
-var vert = '\n  precision mediump float;\n  attribute vec2 position;\n  void main() {\n    gl_Position = vec4(position, 1, 1);\n  }\n';
-
 var canvas = document.querySelector('canvas');
 var frag = document.querySelector('script[type="glsl-fragment-shader"]').textContent;
-var gl = Context(canvas, render);
-var shader = Shader(gl, vert, frag);
+var gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+var render = require('./render')(gl, frag);
+var start = now();
 
-function render() {
-  var width = gl.drawingBufferWidth;
-  var height = gl.drawingBufferHeight;
+window.requestAnimationFrame(tick);
 
-  gl.viewport(0, 0, width, height);
-
-  shader.bind();
-  shader.uniforms.iGlobalTime = (now() - start) / 1000;
-  shader.uniforms.iResolution = [width, height, 1];
-  triangle(gl);
+function tick() {
+  render((now() - start) / 1000);
+  window.requestAnimationFrame(tick);
 }
 
-},{"a-big-triangle":1,"gl-context":16,"gl-shader":18,"right-now":43}]},{},[50]);
+},{"./render":49,"right-now":41}],49:[function(require,module,exports){
+'use strict';
+
+var triangle = require('a-big-triangle');
+var Shader = require('gl-shader');
+
+var vert = '\n  precision mediump float;\n  attribute vec2 position;\n  void main() {\n    gl_Position = vec4(position, 1, 1);\n  }\n';
+
+module.exports = function (gl, frag) {
+  var shader = Shader(gl, vert, frag);
+
+  return function render(t) {
+    var width = gl.drawingBufferWidth;
+    var height = gl.drawingBufferHeight;
+
+    gl.viewport(0, 0, width, height);
+
+    shader.bind();
+    shader.uniforms.iGlobalTime = t;
+    shader.uniforms.iResolution = [width, height, 1];
+    triangle(gl);
+  };
+};
+
+},{"a-big-triangle":1,"gl-shader":17}]},{},[48]);
