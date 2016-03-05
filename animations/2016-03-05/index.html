@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <meta charset="utf-8">
-<title>2016-02-16</title>
+<title>2016-03-05</title>
 <body>
 <style>
 html, body {
@@ -81,41 +81,30 @@ a {
 
 </style>
 
-<a id="prev" href="/animations/2016-02-15/">‹</a>
+<a id="prev" href="/animations/2016-02-16/">‹</a>
 
 <script type="glsl-fragment-shader">
-precision mediump float;
+precision highp float;
 
 uniform float iGlobalTime;
 uniform vec3  iResolution;
 
-#define PI 3.1415926535897932384626433832795
-
-void main() {
-  vec2 st = gl_FragCoord.xy / iResolution.xy;
-  float f = 2.0 / 3.0;
-
-  vec3 t = vec3(step(f, st.y) * (0.25+0.25*sin(st.x*PI+iGlobalTime)));
-  vec3 m = vec3((1.-step(f, st.y))*(1.-step(f, 1.-st.y))*(0.25+0.25*sin(st.x*PI-iGlobalTime+PI*2./3.)));
-  vec3 b = vec3(step(f, 1.-st.y)*(0.25+0.25*sin(st.x*PI+iGlobalTime+PI*4./3.)));
-  vec3 p = vec3(step(f, st.x) * (0.25+0.25*cos(st.y*PI-iGlobalTime)));
-  vec3 q = vec3((1.-step(f, st.x))*(1.-step(f, 1.-st.x))*(0.25+0.25*cos(st.y*PI+iGlobalTime+PI*2./3.)));
-  vec3 r = vec3(step(f, 1.-st.x)*(0.25+0.25*cos(st.y*PI-iGlobalTime+PI*4./3.)));
-
-  gl_FragColor.rbg = t + m + b + p + q + r;
-  gl_FragColor.a = 1.;
+void main(){
+  vec2 st = gl_FragCoord.xy/iResolution.xy*2.-1.;
+  float d = length(abs(st) + .5);
+  float t = iGlobalTime + 1000.0;
+  gl_FragColor = vec4(vec3(fract(d*t/10.)), 1.0);
 }
 
 </script>
 <canvas width="500" height="500"></canvas>
 <script type="text/javascript" src="/animations/glsl.js"></script>
 
-<a id="next" href="/animations/2016-03-05/">›</a>
 
 <footer>
     <a href="/animations/"><i class="fa fa-th"></i></a>
     <a href="https://twitter.com/jfire"><i class="fa fa-twitter"></i></a>
-    <a href="https://github.com/jfirebaugh/animations/blob/master/posts/2016-02-16.glsl"><i class="fa fa-github"></i></a>
+    <a href="https://github.com/jfirebaugh/animations/blob/master/posts/2016-03-05.glsl"><i class="fa fa-github"></i></a>
 </footer>
 <script>
   document.addEventListener('DOMContentLoaded', function(event) {
