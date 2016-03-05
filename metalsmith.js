@@ -8,6 +8,7 @@ var layouts = require('metalsmith-layouts');
 var pagination = require('metalsmith-pagination');
 var assets = require('metalsmith-assets');
 var browserify = require('metalsmith-browserify');
+var thumbnail = require('./src/thumbnail');
 
 Handlebars.registerHelper('each-reverse', require('diy-handlebars-helpers/lib/each-reverse'));
 
@@ -34,13 +35,17 @@ module.exports = Metalsmith(__dirname)
         data.layout = 'glsl.html';
         delete files[name];
         files[name.replace(/\.glsl$/, '.html')] = data;
+        files['static/' + name.replace(/\.glsl$/, '.png')] = {
+          contents: thumbnail(data.contents)
+        }
       }
     });
     done();
   })
   .use(permalinks({
     pattern: ':date',
-    date: 'YYYY-MM-DD'
+    date: 'YYYY-MM-DD',
+    relative: false
   }))
   .use(pagination({
     posts: {

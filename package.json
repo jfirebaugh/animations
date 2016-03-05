@@ -26,6 +26,7 @@
     "babelify": "^7.2.0",
     "browserify": "^13.0.0",
     "diy-handlebars-helpers": "^1.0.10",
+    "gl": "^2.1.5",
     "gl-shader": "^4.2.0",
     "handlebars": "^4.0.5",
     "metalsmith": "^2.1.0",
@@ -39,6 +40,7 @@
     "metalsmith-permalinks": "^0.4.1",
     "metalsmith-serve": "0.0.7",
     "metalsmith-watch": "^1.0.1",
+    "pngjs": "^2.2.0",
     "right-now": "^1.0.0"
   },
   "browserify": {
